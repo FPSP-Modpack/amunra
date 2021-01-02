@@ -15,6 +15,11 @@ public class SethWorldProvider extends AmunraWorldProvider {
     public SethWorldProvider() {
         // TODO Auto-generated constructor stub
     }
+    
+    @Override
+    public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.moonSeth.getTierRequirement();
+    }
 
     @Override
     public double getYCoordinateToTeleport() {

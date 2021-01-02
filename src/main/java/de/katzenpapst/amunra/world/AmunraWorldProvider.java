@@ -60,19 +60,14 @@ IExitHeight, ISolarLevel {
     }*/
 
     @Override
-    public boolean canSpaceshipTierPass(int tier)
-    {
-        return tier >= AmunRa.config.planetDefaultTier;
-    }
-
-    @Override
     public boolean shouldForceRespawn()
     {
         return !ConfigManagerCore.forceOverworldRespawn;
     }
-
+    
+    @Override
     public boolean hasAtmosphere() {
-        return this.getCelestialBody().atmosphere.size() > 0;
+    	return this.getCelestialBody().atmosphere.size() > 0;
     }
 
     public boolean hasClouds() {

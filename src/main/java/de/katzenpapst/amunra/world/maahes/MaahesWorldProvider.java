@@ -88,4 +88,9 @@ public class MaahesWorldProvider extends AmunraWorldProvider  {
         return 0.7F;
     }
 
+	@Override
+	public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.moonMaahes.getTierRequirement();
+	}
+
 }

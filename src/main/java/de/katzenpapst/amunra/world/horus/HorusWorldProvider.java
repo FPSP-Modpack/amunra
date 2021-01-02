@@ -84,4 +84,9 @@ public class HorusWorldProvider extends AmunraWorldProvider {
         return AmunraWorldChunkManager.class;
     }
 
+	@Override
+	public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.planetHorus.getTierRequirement();
+	}
+
 }

@@ -460,7 +460,7 @@ public class AmunRa
         planetHorus.setParentSolarSystem(systemAmunRa);
         planetHorus.setDimensionInfo(config.dimHorus, HorusWorldProvider.class);
         GalacticraftRegistry.registerTeleportType(HorusWorldProvider.class, new TeleportTypeMoon());
-        planetHorus.setTierRequired(config.planetDefaultTier);
+        planetHorus.setTierRequired(13);
         GalaxyRegistry.registerPlanet(planetHorus);
 
 
@@ -492,7 +492,7 @@ public class AmunRa
         moonNeper.atmosphere.add(IAtmosphericGas.HELIUM);
         moonNeper.setDimensionInfo(config.dimNeper, NeperWorldProvider.class);
         moonNeper.setParentPlanet(planetBaal);
-        moonNeper.setTierRequired(config.planetDefaultTier);
+        moonNeper.setTierRequired(13);
         moonNeper.setRelativeSize(0.89F);
         GalacticraftRegistry.registerTeleportType(NeperWorldProvider.class, new TeleportTypeOverworld());
         // GalacticraftRegistry.registerTeleportType(WorldProviderMoon.class, new TeleportTypeMoon());
@@ -511,7 +511,7 @@ public class AmunRa
         asteroidBeltMehen = createPlanet("asteroidBeltMehen", "micromoon.png", Math.PI * 0.19, 1.4, 1.6);
         asteroidBeltMehen.setParentSolarSystem(systemAmunRa);
         asteroidBeltMehen.setDimensionInfo(config.dimMehen, MehenWorldProvider.class);
-        asteroidBeltMehen.setTierRequired(config.planetDefaultTier);
+        asteroidBeltMehen.setTierRequired(13);
         GalacticraftRegistry.registerTeleportType(MehenWorldProvider.class, new TeleportTypeAsteroids());
         GalaxyRegistry.registerPlanet(asteroidBeltMehen);
 
@@ -538,7 +538,7 @@ public class AmunRa
         moonMaahes.atmosphere.add(IAtmosphericGas.HYDROGEN);
         moonMaahes.atmosphere.add(IAtmosphericGas.ARGON);
         moonMaahes.setDimensionInfo(config.dimMaahes, MaahesWorldProvider.class);
-        moonMaahes.setTierRequired(config.planetDefaultTier);
+        moonMaahes.setTierRequired(13);
         GalacticraftRegistry.registerTeleportType(MaahesWorldProvider.class, new TeleportTypeOverworld());
 
         GalaxyRegistry.registerMoon(moonMaahes);
@@ -554,7 +554,7 @@ public class AmunRa
         moonSeth.setParentPlanet(planetSekhmet);
         // moonSeth.atmosphere.add(IAtmosphericGas.NITROGEN);
         moonSeth.setDimensionInfo(config.dimSeth, SethWorldProvider.class);
-        moonSeth.setTierRequired(config.planetDefaultTier);
+        moonSeth.setTierRequired(13);
         GalacticraftRegistry.registerTeleportType(SethWorldProvider.class, new TeleportTypeMoon());
         GalaxyRegistry.registerMoon(moonSeth);
 
@@ -565,7 +565,7 @@ public class AmunRa
         planetAnubis.setDimensionInfo(config.dimAnubis, AnubisWorldProvider.class);
         planetAnubis.setRelativeSize(0.65F);
         GalacticraftRegistry.registerTeleportType(AnubisWorldProvider.class, new TeleportTypeMoon());
-        planetAnubis.setTierRequired(config.planetDefaultTier);
+        planetAnubis.setTierRequired(13);
         GalaxyRegistry.registerPlanet(planetAnubis);
 
         //..with a moon nonetheless

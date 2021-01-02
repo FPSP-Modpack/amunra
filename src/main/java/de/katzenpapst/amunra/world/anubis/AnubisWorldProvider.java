@@ -109,4 +109,9 @@ public class AnubisWorldProvider extends AmunraWorldProvider {
         return false;
     }
 
+	@Override
+	public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.planetAnubis.getTierRequirement();
+	}
+
 }

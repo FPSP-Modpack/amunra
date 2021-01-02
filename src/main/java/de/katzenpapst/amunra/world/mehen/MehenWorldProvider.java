@@ -28,7 +28,10 @@ public class MehenWorldProvider extends AmunRaAsteroidWorldProvider {
     public String getSaveDataID() {
         return "AsteroidDataMehen";
     }
-
-
-
+    
+    @Override
+    public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.asteroidBeltMehen.getTierRequirement();
+    }
+    
 }

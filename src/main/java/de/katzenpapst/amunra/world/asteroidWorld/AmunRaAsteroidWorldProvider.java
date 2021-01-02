@@ -82,12 +82,6 @@ abstract public class AmunRaAsteroidWorldProvider extends WorldProviderAsteroids
         return 0.0F;
     }
 
-    @Override
-    public boolean canSpaceshipTierPass(int tier)
-    {
-        return tier >= AmunRa.config.planetDefaultTier;
-    }
-
     /**
      * This is the part which makes the world brighter or dimmer
      */

@@ -97,4 +97,9 @@ public class NeperWorldProvider extends AmunraWorldProvider  {
         return 1F;
     }
 
+	@Override
+	public boolean canSpaceshipTierPass(int tier) {
+    	return tier >= AmunRa.instance.moonNeper.getTierRequirement();
+	}
+
 }
