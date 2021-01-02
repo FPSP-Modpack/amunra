@@ -2,6 +2,7 @@ package de.katzenpapst.amunra.world.seth;
 
 import java.util.List;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import de.katzenpapst.amunra.block.ARBlocks;
@@ -30,6 +31,7 @@ public class SethBiomeDecorator extends AmunraBiomeDecorator {
 		list.add(new WorldGenOre(ARBlocks.oreCopperHardClay, 8, floorStoneBlock, 6, 2, 60));
 		list.add(new WorldGenOre(ARBlocks.oreTinHardClay, 8, floorStoneBlock, 6, 2, 60));
 		list.add(new WorldGenOre(ARBlocks.oreIronHardClay, 8, floorStoneBlock, 6, 2, 60));
+		list.add(new WorldGenOre(new BlockMetaPair(GameRegistry.findBlock("MorePlanet", "koentus_block"), (byte) 8), 7, floorStoneBlock, 7, 2, 64));
 
 		return list;
 	}

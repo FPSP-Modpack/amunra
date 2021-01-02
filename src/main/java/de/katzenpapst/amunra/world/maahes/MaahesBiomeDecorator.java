@@ -2,11 +2,13 @@ package de.katzenpapst.amunra.world.maahes;
 
 import java.util.List;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.world.AmunraBiomeDecorator;
 import de.katzenpapst.amunra.world.WorldGenOre;
 import de.katzenpapst.amunra.world.WorldGenTallgrassMeta;
 import de.katzenpapst.amunra.world.WorldGenTreeBySapling;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import net.minecraft.world.gen.feature.WorldGenerator;
 
 public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
@@ -27,6 +29,7 @@ public class MaahesBiomeDecorator extends AmunraBiomeDecorator {
 		list.add(new WorldGenOre(ARBlocks.oreAluBasalt,    8, ARBlocks.blockBasalt, 16, 23, 70));
 		list.add(new WorldGenOre(ARBlocks.oreGoldBasalt,   6, ARBlocks.blockBasalt, 8, 5, 30));
 		list.add(new WorldGenOre(ARBlocks.oreLapisBasalt, 12, ARBlocks.blockBasalt, 6, 2, 20));
+		list.add(new WorldGenOre(new BlockMetaPair(GameRegistry.findBlock("MorePlanet", "pluto_block"), (byte) 7), 10, ARBlocks.blockBasalt, 4, 10, 50));
 
 		return list;
 	}

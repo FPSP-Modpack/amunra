@@ -4,18 +4,19 @@ import org.lwjgl.Sys;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.vector.Vector3f;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
 import micdoodle8.mods.galacticraft.api.event.client.CelestialBodyRenderEvent;
+import micdoodle8.mods.galacticraft.api.event.client.CelestialBodyRenderEvent.CelestialRingRenderEvent;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.Moon;
 import micdoodle8.mods.galacticraft.api.galaxies.Planet;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.proxy.ClientProxyCore.EventSpecialRender;
 import micdoodle8.mods.galacticraft.planets.asteroids.client.render.NetworkRenderer;
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
 
 public class SystemRenderEventHandler {
     /*@SideOnly(Side.CLIENT)
@@ -28,7 +29,7 @@ public class SystemRenderEventHandler {
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void onRingRender(CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent)
+    public void onRingRender(CelestialRingRenderEvent.Pre renderEvent)
     {
         // sky: D:\Code\Galacticraft\src\main\java\micdoodle8\mods\galacticraft\planets\mars\client\SkyProviderMars.java
         if (renderEvent.celestialBody.equals(AmunRa.instance.asteroidBeltMehen) || renderEvent.celestialBody.equals(AmunRa.instance.moonBaalRings))
@@ -39,7 +40,7 @@ public class SystemRenderEventHandler {
 
 
 
-    protected void drawAsteroidRings(CelestialBodyRenderEvent.CelestialRingRenderEvent.Pre renderEvent, CelestialBody aroundBody) {
+    protected void drawAsteroidRings(CelestialRingRenderEvent.Pre renderEvent, CelestialBody aroundBody) {
 
         Vector3f mapPos = renderEvent.parentOffset;
 
