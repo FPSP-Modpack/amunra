@@ -106,7 +106,7 @@ public class EntityShuttle extends EntityTieredRocket {
     }
 
     public static boolean isPreFueled(int damage) {
-        return damage == 15;
+        return damage == encodeItemDamage(3, 3) + 1;
     }
 
     public static int getNumChestsFromDamage(int damage) {

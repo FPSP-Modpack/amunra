@@ -1,5 +1,23 @@
 package de.katzenpapst.amunra.crafting;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Vector;
+
+import org.apache.logging.log4j.Level;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.FMLRelaunchLog;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.block.ARBlocks;
+import de.katzenpapst.amunra.block.BlockStairsAR;
+import de.katzenpapst.amunra.block.ore.BlockOreMulti;
+import de.katzenpapst.amunra.block.ore.SubBlockOre;
+import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
+import de.katzenpapst.amunra.item.ARItems;
+import de.katzenpapst.amunra.item.ItemDamagePair;
+import de.katzenpapst.amunra.schematic.SchematicPageShuttle;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.recipe.CircuitFabricatorRecipes;
 import micdoodle8.mods.galacticraft.api.recipe.CompressorRecipes;
@@ -21,25 +39,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Vector;
-
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.block.ARBlocks;
-import de.katzenpapst.amunra.block.BlockStairsAR;
-import de.katzenpapst.amunra.block.ore.BlockOreMulti;
-import de.katzenpapst.amunra.block.ore.SubBlockOre;
-import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
-import de.katzenpapst.amunra.item.ARItems;
-import de.katzenpapst.amunra.item.ItemDamagePair;
-import de.katzenpapst.amunra.schematic.SchematicPageShuttle;
 
 public class RecipeHelper {
 
@@ -759,43 +758,36 @@ public class RecipeHelper {
 
         ItemStack lightPlate = ARItems.lightPlating.getItemStack(1);
         ItemStack shuttleLeg = ARItems.shuttleLegs.getItemStack(1);
-        // Schematic
+        
         HashMap<Integer, ItemStack> input = new HashMap<Integer, ItemStack>();
-        // top row, single slot
+        // nose cone
         input.put(1, ARItems.noseCone.getItemStack(1));
         // body
         input.put(2, lightPlate);
         input.put(3, lightPlate);
         input.put(4, lightPlate);
-        // next 3
         input.put(5, lightPlate);
         input.put(6, new ItemStack(Blocks.glass_pane, 1, 0));
         input.put(7, lightPlate);
-
         input.put(8,  lightPlate);
         input.put(9,  lightPlate);
         input.put(10, lightPlate);
-
-        // second to last row, the fins start here
-        input.put(11, new ItemStack(GCItems.partFins));
-
-        // for now, potentially change this
         input.put(12, lightPlate);
         input.put(13, lightPlate);
         input.put(14, lightPlate);
-
-        input.put(15, new ItemStack(GCItems.partFins));
-
-        // last row
+        // fins
+        input.put(11, new ItemStack(GameRegistry.findItem("MorePlanet", "tier_7_rocket_module"), 1, 3));
+        input.put(15, new ItemStack(GameRegistry.findItem("MorePlanet", "tier_7_rocket_module"), 1, 3));
+        // legs
         input.put(16, shuttleLeg);
-        // engine?
-        input.put(17, new ItemStack(GCItems.rocketEngine));
         input.put(18, shuttleLeg);
-
-
-        // chests
-        input.put(19, null);
+        // engine
+        input.put(17, new ItemStack(GameRegistry.findItem("MorePlanet", "tier_7_rocket_module")));
+        // control computer
+        input.put(19, new ItemStack(GameRegistry.findItem("GalaxySpace", "item.RocketControlComputer"), 1, 14));
+        // tank
         input.put(20, null);
+         // chest
         input.put(21, null);
 
         addRocketRecipeWithChestPermutations(ARItems.shuttleItem, input);
@@ -913,79 +905,74 @@ public class RecipeHelper {
      */
     public static void addRocketRecipeWithChestPermutations(Item rocket, HashMap<Integer, ItemStack> input)
     {
-        int chestSlot1 = 19;
-        int chestSlot2 = 20;
-        int chestSlot3 = 21;
-
-        ItemStack chest = new ItemStack(Blocks.chest);
-        ItemStack tank = ARItems.shuttleTank.getItemStack(1);
-
-
-        /*ItemStack numChests0 = new ItemStack(rocket, 1, 0);
-        ItemStack numChests1 = new ItemStack(rocket, 1, 1);
-        ItemStack numChests2 = new ItemStack(rocket, 1, 2);
-        ItemStack numChests3 = new ItemStack(rocket, 1, 3);*/
-
-
-        // 0-0
-        RocketRecipeHelper rrh = new RocketRecipeHelper(null);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(0, 0)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 1-0
-        rrh = new RocketRecipeHelper(chest, null);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(1, 0)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-
-        // 2-0
-        rrh = new RocketRecipeHelper(null, chest);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(2, 0)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 3-0
-        rrh = new RocketRecipeHelper(chest);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(3, 0)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // now with tanks
-        // 0-1
-        rrh = new RocketRecipeHelper(tank, null);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(0, 1)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 0-2
-        rrh = new RocketRecipeHelper(null, tank);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(0, 2)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 0-3
-        rrh = new RocketRecipeHelper(tank);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(0, 3)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 1-1
-        rrh = new RocketRecipeHelper(tank, chest, null);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(1, 1)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 2-1
-        rrh = new RocketRecipeHelper(tank, chest);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(2, 1)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-        // 1-2
-        rrh = new RocketRecipeHelper(chest, tank);
-        addRocketRecipeWithChestPermutations(new ItemStack(rocket, 1, EntityShuttle.encodeItemDamage(1, 2)), input, chestSlot1, chestSlot2, chestSlot3, rrh);
-
-    }
-
-    public static void addRocketRecipeWithChestPermutations(ItemStack output, HashMap<Integer, ItemStack> incompleteInput,
-            int chestSlot1, int chestSlot2, int chestSlot3,
-            RocketRecipeHelper rrh) {
-
-        ArrayList<ItemStack> chest1 = rrh.getStacks(0);
-        ArrayList<ItemStack> chest2 = rrh.getStacks(1);
-        ArrayList<ItemStack> chest3 = rrh.getStacks(2);
-        HashMap<Integer, ItemStack> input;
-        for(int i=0;i<chest1.size();i++) {
-            input = new HashMap<Integer, ItemStack>(incompleteInput);
-            input.put(chestSlot1, chest1.get(i));
-            input.put(chestSlot2, chest2.get(i));
-            input.put(chestSlot3, chest3.get(i));
-            addNasaWorkbenchRecipe(output, input);
-        }
+    	ItemStack chest1 = new ItemStack(GameRegistry.findItem("IronChest", "BlockIronChest"), 1, 3);
+    	ItemStack chest2 = new ItemStack(GameRegistry.findItem("IronChest", "BlockIronChest"));
+    	ItemStack chest3 = new ItemStack(GameRegistry.findItem("IronChest", "BlockIronChest"), 1, 1);
+    	ItemStack tank0 = new ItemStack(GameRegistry.findItem("GalaxySpace", "item.RocketParts"), 1, 42);
+    	ItemStack tank1 = new ItemStack(GameRegistry.findItem("GalaxySpace", "item.RocketParts"), 1, 43);
+    	ItemStack tank2 = new ItemStack(GameRegistry.findItem("GalaxySpace", "item.RocketParts"), 1, 44);
+    	ItemStack tank3 = new ItemStack(GameRegistry.findItem("GalaxySpace", "item.RocketParts"), 1, 45);
+    	
+    	HashMap<Integer, ItemStack> input0 = new HashMap<>(input);
+    	input0.put(20, tank0);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(0, 0)), input0);
+    	HashMap<Integer, ItemStack> input1 = new HashMap<>(input);
+    	input1.put(20, tank0);
+    	input1.put(21, chest1);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(1, 0)), input1);
+    	HashMap<Integer, ItemStack> input2 = new HashMap<>(input);
+    	input2.put(20, tank0);
+    	input2.put(21, chest2);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(2, 0)), input2);
+    	HashMap<Integer, ItemStack> input3 = new HashMap<>(input);
+    	input3.put(20, tank0);
+    	input3.put(21, chest3);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(3, 0)), input3);
+    	HashMap<Integer, ItemStack> input4 = new HashMap<>(input);
+    	input4.put(20, tank1);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(0, 1)), input4);
+    	HashMap<Integer, ItemStack> input5 = new HashMap<>(input);
+    	input5.put(20, tank1);
+    	input5.put(21, chest1);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(1, 1)), input5);
+    	HashMap<Integer, ItemStack> input6 = new HashMap<>(input);
+    	input6.put(20, tank1);
+    	input6.put(21, chest2);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(2, 1)), input6);
+    	HashMap<Integer, ItemStack> input7 = new HashMap<>(input);
+    	input7.put(20, tank1);
+    	input7.put(21, chest3);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(3, 1)), input7);
+    	HashMap<Integer, ItemStack> input8 = new HashMap<>(input);
+    	input8.put(20, tank2);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(0, 2)), input8);
+    	HashMap<Integer, ItemStack> input9 = new HashMap<>(input);
+    	input9.put(20, tank2);
+    	input9.put(21, chest1);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(1, 2)), input9);
+    	HashMap<Integer, ItemStack> inputA = new HashMap<>(input);
+    	inputA.put(20, tank2);
+    	inputA.put(21, chest2);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(2, 2)), inputA);
+    	HashMap<Integer, ItemStack> inputB = new HashMap<>(input);
+    	inputB.put(20, tank2);
+    	inputB.put(21, chest3);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(3, 2)), inputB);
+    	HashMap<Integer, ItemStack> inputC = new HashMap<>(input);
+    	inputC.put(20, tank3);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(0, 3)), inputC);
+    	HashMap<Integer, ItemStack> inputD = new HashMap<>(input);
+    	inputD.put(20, tank3);
+    	inputD.put(21, chest1);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(1, 3)), inputD);
+    	HashMap<Integer, ItemStack> inputE = new HashMap<>(input);
+    	inputE.put(20, tank3);
+    	inputE.put(21, chest2);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(2, 3)), inputE);
+    	HashMap<Integer, ItemStack> inputF = new HashMap<>(input);
+    	inputF.put(20, tank3);
+    	inputF.put(21, chest3);
+    	addNasaWorkbenchRecipe(new ItemStack(ARItems.shuttleItem, 1, EntityShuttle.encodeItemDamage(3, 3)), inputF);
     }
 
     public static void addNasaWorkbenchRecipe(ItemStack result, HashMap<Integer, ItemStack> input) {

@@ -155,16 +155,13 @@ public class ItemShuttle extends Item implements IHoldableItem {
 
         for(int numTanks = 0;numTanks <= 3;numTanks++) {
             for(int numChests = 0;numChests <= 3;numChests++) {
-                if(numChests + numTanks > 3) {
-                    continue; // do it later
-                }
                 int dmg = numChests | (numTanks << 2);
                 par3List.add(new ItemStack(par1, 1, dmg));
             }
         }
 
         // lastly
-        par3List.add(new ItemStack(par1, 1, 3 | (3<<2) ));
+        par3List.add(new ItemStack(par1, 1, EntityShuttle.encodeItemDamage(3, 3) + 1));
     }
 
     @Override
