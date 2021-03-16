@@ -63,7 +63,7 @@ public class RecipeHelper {
         ItemStack compressedTinStack = new ItemStack(GCItems.basicItem, 1, 7);//GCItems.basicItem, 7
         ItemStack compressedSteelStack = new ItemStack(GCItems.basicItem, 1, 9);
         ItemStack compressedTitaniumStack = new ItemStack(AsteroidsItems.basicItem, 1, 6);
-        ItemStack button = new ItemStack(Item.getItemFromBlock(Blocks.stone_button), 1);
+        ItemStack button = new ItemStack(Blocks.stone_button, 1);
         ItemStack laserDiodeStack = ARItems.laserDiode.getItemStack(1);
         ItemStack cryoDiodeStack = ARItems.cryoDiode.getItemStack(1);
         ItemStack beamCore = new ItemStack(AsteroidsItems.basicItem, 1, 8);
@@ -84,10 +84,10 @@ public class RecipeHelper {
 
         // *** mothership ***
         final HashMap<Object, Integer> inputMap = new HashMap<Object, Integer>();
-        inputMap.put(compressedTinStack, 64);
-        inputMap.put(compressedAluStack, 16);
         inputMap.put(ARBlocks.getItemStack(ARBlocks.blockMothershipController, 1), 1);
-        inputMap.put(Items.iron_ingot, 24);
+        inputMap.put("blockIridium", 256);
+		inputMap.put("blockFutureGlass", 8);
+		inputMap.put(ARItems.darkShard.getItemStack(1), 1);
         mothershipRecipe = new SpaceStationRecipe(inputMap);
 
         // *** circuit fabricator recipes ***
