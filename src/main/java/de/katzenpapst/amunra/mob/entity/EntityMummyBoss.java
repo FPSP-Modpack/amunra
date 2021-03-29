@@ -105,7 +105,7 @@ public class EntityMummyBoss extends EntityMob implements IBossDisplayData, IRan
             if(ds instanceof EntityDamageSourceIndirect && (((EntityDamageSourceIndirect)ds).getEntity() instanceof EntityCryoArrow)) {
                 amount *= 1.5F;
             } else {
-                amount /= 2.0F;
+                amount = Math.min(amount / 2, 420);
             }
         }
         return super.attackEntityFrom(ds, amount);
@@ -147,7 +147,7 @@ public class EntityMummyBoss extends EntityMob implements IBossDisplayData, IRan
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(200.0F * ConfigManagerCore.dungeonBossHealthMod);
+        this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10000.0F * ConfigManagerCore.dungeonBossHealthMod);
         this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.25F);
         //
         this.getEntityAttribute(SharedMonsterAttributes.followRange).setBaseValue(32.0F);
