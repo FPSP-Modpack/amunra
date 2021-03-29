@@ -146,14 +146,14 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         //this.playerInRange = this.lastPlayerInRange = nbt.getBoolean("playerInRange");
         this.isBossDefeated = nbt.getBoolean("defeated");
 
-        try
+        /*try
         {
             this.bossClass = (Class<? extends IAmunRaBoss>) Class.forName(nbt.getString("bossClass"));
         }
         catch (Exception e)
         {
             e.printStackTrace();
-        }
+        }*/
 
         if(nbt.hasKey("roomArea")) {
             roomArea = NbtHelper.readAABB(nbt.getCompoundTag("roomArea"));
