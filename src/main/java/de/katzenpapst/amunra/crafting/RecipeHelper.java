@@ -767,7 +767,7 @@ public class RecipeHelper {
         input.put(3, lightPlate);
         input.put(4, lightPlate);
         input.put(5, lightPlate);
-        input.put(6, new ItemStack(Blocks.glass_pane, 1, 0));
+        input.put(6, new ItemStack(GameRegistry.findItem("AdvancedSolarPanel", "asp_crafting_items"), 1, 5));
         input.put(7, lightPlate);
         input.put(8,  lightPlate);
         input.put(9,  lightPlate);
