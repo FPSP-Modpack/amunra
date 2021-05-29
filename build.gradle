@@ -17,7 +17,7 @@ buildscript {
 
 apply plugin: 'forge'
 
-version = "0.4.9-FPSP"
+version = "0.4.10-FPSP"
 group= "de.katzenpapst.amunra"
 archivesBaseName = "AmunRa"
 
