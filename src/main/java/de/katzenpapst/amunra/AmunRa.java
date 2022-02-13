@@ -100,9 +100,9 @@ import net.minecraftforge.common.config.Configuration;
 name = AmunRa.MODNAME)
 public class AmunRa
 {
-    public static final String MODID = "GalacticraftAmunRa";
+    public static final String MODID = "amunra";
     public static final String MODNAME = "Amun-Ra";
-    public static final String VERSION = "0.4.8";
+    public static final String VERSION = "GRADLETOKEN_VERSION";
 
     public static ARChannelHandler packetPipeline;
 
