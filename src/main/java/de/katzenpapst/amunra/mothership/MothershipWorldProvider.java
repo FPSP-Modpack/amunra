@@ -164,7 +164,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
         // this really shouldn't happen...
         if(TickHandlerServer.mothershipData == null) {
             throw new RuntimeException("Premature Mothership dimension creation! This *MIGHT* be due to a configuration error. "
-                    + "Please try changing I:mothershipProviderID in GalacticraftAmunRa.cfg and try again. "
+                    + "Please try changing I:mothershipProviderID in amunra.cfg and try again. "
                     + "If error persists, please report a bug including a complete list of your mods");
         }
         this.mothershipObj = TickHandlerServer.mothershipData.getByDimensionId(id);
