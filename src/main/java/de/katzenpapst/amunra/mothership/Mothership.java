@@ -17,7 +17,6 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.Constants;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
@@ -44,8 +43,8 @@ public class Mothership extends CelestialBody {
 
     // protected List<PlayerID> playerList = new ArrayList<PlayerID>();
 
-    protected Set<PlayerID> playerSetLanding = new HashSet<PlayerID>();
-    protected Set<PlayerID> playerSetUsage = new HashSet<PlayerID>();
+    protected Set<PlayerID> playerSetLanding = new HashSet<>();
+    protected Set<PlayerID> playerSetUsage = new HashSet<>();
 
     protected PermissionMode permModeLanding = PermissionMode.NONE;
     protected PermissionMode permModeUsage = PermissionMode.NONE;
@@ -214,7 +213,7 @@ public class Mothership extends CelestialBody {
             return false;
         }
 
-        FMLLog.info("Mothership %d will begin transit to %s", this.getID(), target.getName());
+        AmunRa.LOGGER.debug("Mothership {} will begin transit to {}", this.getID(), target.getName());
 
         // allow change of route in mid-transit, too
         this.inTransit = true;
@@ -237,7 +236,7 @@ public class Mothership extends CelestialBody {
         if (!this.inTransit) {
             return false;
         }
-        FMLLog.info("Mothership %d finished transit", this.getID());
+        AmunRa.LOGGER.info("Mothership {} finished transit", this.getID());
         this.previousParent = null;
         this.travelTimeRemaining = 0;
         this.travelTimeTotal = 0;

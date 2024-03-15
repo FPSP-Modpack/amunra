@@ -12,6 +12,10 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidRegistry;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -104,7 +108,7 @@ import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
 public class AmunRa {
 
     public static final String MODID = "amunra";
-    public static final String MODNAME = "AmunRa";
+    public static final String MODNAME = "Amun-Ra";
     public static final String VERSION = Tags.VERSION;
 
     public static ARChannelHandler packetPipeline;
@@ -149,17 +153,15 @@ public class AmunRa {
 
     public static final ARConfig config = new ARConfig();
 
-    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<ResourceLocation>();
-    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<ResourceLocation>();
+    protected ArrayList<ResourceLocation> possibleMothershipTextures = new ArrayList<>();
+    protected ArrayList<ResourceLocation> possibleAsteroidTextures = new ArrayList<>();
 
     @SidedProxy(
         clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",
         serverSide = "de.katzenpapst.amunra.proxy.ServerProxy")
     public static ARSidedProxy proxy;
 
-    protected void loadJsonConfig() {
-
-    }
+    public static final Logger LOGGER = LogManager.getLogger(MODNAME);
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
@@ -256,6 +258,9 @@ public class AmunRa {
         FMLCommonHandler.instance()
             .bus()
             .register(new TickHandlerServer());
+
+        TileEntityMothershipEngineJet.jetFuel = FluidRegistry.getFluid(config.validJetEngineFuel);
+        TileEntityMothershipEngineIon.coolant = FluidRegistry.getFluid(config.validIonThrusterCoolant);
 
         // failsafes
         doCompatibilityChecks();

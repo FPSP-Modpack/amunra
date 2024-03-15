@@ -17,7 +17,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
@@ -65,10 +64,12 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
      * Ticks the block if it's been scheduled
      */
     @Override
-    public void updateTick(World world, int x, int y, int z, Random rand) {
-        if (!world.isRemote) {
-            int metadata = world.getBlockMetadata(x, y, z);
-            getSubBlock(metadata).updateTick(world, x, y, z, rand);
+    public void updateTick(World worldIn, int x, int y, int z, Random random) {
+        if (!worldIn.isRemote) {
+            final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+            if (sb != null) {
+                sb.updateTick(worldIn, x, y, z, random);
+            }
         }
     }
 
@@ -85,34 +86,45 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     @Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
         double explosionY, double explosionZ) {
-        int metadata = world.getBlockMetadata(x, y, z);
-
-        return getSubBlock(metadata)
-            .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        final SubBlock sb = this.getSubBlock(world.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        }
+        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
-    public float getBlockHardness(World world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-
-        return getSubBlock(meta).getBlockHardness(world, x, y, z);
+    public float getBlockHardness(World worldIn, int x, int y, int z) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getBlockHardness(worldIn, x, y, z);
+        }
+        return super.getBlockHardness(worldIn, x, y, z);
     }
 
     @Override
     public String getShiftDescription(int meta) {
-        return ((SubBlockMachine) this.getSubBlock(meta)).getShiftDescription(0);
+        if (this.getSubBlock(meta) instanceof SubBlockMachine sbm) {
+            return sbm.getShiftDescription(0);
+        }
+        return "";
     }
 
     @Override
     public boolean showDescription(int meta) {
-        return ((SubBlockMachine) this.getSubBlock(meta)).showDescription(0);
+        if (this.getSubBlock(meta) instanceof SubBlockMachine sbm) {
+            return sbm.showDescription(0);
+        }
+        return false;
     }
 
     @Override
     public boolean onMachineActivated(World world, int x, int y, int z, EntityPlayer entityPlayer, int side, float hitX,
         float hitY, float hitZ) {
-        return ((SubBlockMachine) this.getSubBlock(world.getBlockMetadata(x, y, z)))
-            .onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
+        if (this.getSubBlock(world.getBlockMetadata(x, y, z)) instanceof SubBlockMachine sbm) {
+            return sbm.onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
+        }
+        return super.onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
     }
 
     @Override
@@ -158,8 +170,11 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
 
     @Override
     public String getUnlocalizedSubBlockName(int meta) {
-        return this.getSubBlock(meta)
-            .getUnlocalizedName();
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.getUnlocalizedName();
+        }
+        return this.getUnlocalizedName();
     }
 
     @SuppressWarnings("deprecation")
@@ -185,10 +200,9 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
         }
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List<ItemStack> par3List) {
         for (int i = 0; i < this.subBlocksArray.length; i++) {
             if (subBlocksArray[i] != null) {
                 par3List.add(new ItemStack(par1, 1, i));
@@ -198,16 +212,19 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
 
     @Override
     public TileEntity createTileEntity(World world, int metadata) {
-        return this.getSubBlock(metadata)
-            .createTileEntity(world, metadata);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb != null) {
+            return sb.createTileEntity(world, metadata);
+        }
+        return super.createTileEntity(world, metadata);
     }
 
     @Override
-    public boolean onUseWrench(World par1World, int x, int y, int z, EntityPlayer par5EntityPlayer, int side,
-        float hitX, float hitY, float hitZ) {
-        int metadata = par1World.getBlockMetadata(x, y, z);
-        if (!this.getSubBlock(metadata)
-            .canBeMoved(par1World, x, y, z)) {
+    public boolean onUseWrench(World world, int x, int y, int z, EntityPlayer par5EntityPlayer, int side, float hitX,
+        float hitY, float hitZ) {
+        int metadata = world.getBlockMetadata(x, y, z);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb == null || !sb.canBeMoved(world, x, y, z)) {
             return false;
         }
 
@@ -231,12 +248,12 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
 
         change = this.addRotationMeta(this.getDistinctionMeta(metadata), change);
 
-        TileEntity te = par1World.getTileEntity(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te instanceof TileBaseUniversalElectrical) {
             ((TileBaseUniversalElectrical) te).updateFacing();
         }
 
-        par1World.setBlockMetadataWithNotify(x, y, z, change, 3);
+        world.setBlockMetadataWithNotify(x, y, z, change, 3);
         return true;
     }
 
@@ -284,7 +301,7 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     public Item getItemDropped(int meta, Random random, int fortune) {
         SubBlock sb = getSubBlock(meta);
 
-        if (sb.dropsSelf()) {
+        if (sb == null || sb.dropsSelf()) {
             return Item.getItemFromBlock(this);
         }
         return sb.getItemDropped(0, random, fortune);
@@ -293,7 +310,7 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     @Override
     public int damageDropped(int meta) {
         SubBlock sb = getSubBlock(meta);
-        if (sb.dropsSelf()) {
+        if (sb == null || sb.dropsSelf()) {
             return getDistinctionMeta(meta);
         }
         return sb.damageDropped(0);
@@ -307,18 +324,19 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
     @Override
     public int quantityDropped(int meta, int fortune, Random random) {
         SubBlock sb = getSubBlock(meta);
-        if (sb.dropsSelf()) {
+        if (sb == null || sb.dropsSelf()) {
             return 1;
         }
         return sb.quantityDropped(meta, fortune, random);
     }
 
     @Override
-    public boolean getBlocksMovement(IBlockAccess par1World, int x, int y, int z) {
-        int meta = par1World.getBlockMetadata(x, y, z);
-
-        return this.getSubBlock(meta)
-            .getBlocksMovement(par1World, x, y, z);
+    public boolean getBlocksMovement(IBlockAccess worldIn, int x, int y, int z) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getBlocksMovement(worldIn, x, y, z);
+        }
+        return super.getBlocksMovement(worldIn, x, y, z);
     }
 
     @Override
@@ -347,37 +365,44 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
             }
         }
         // handle the other stuff in the subblock
-        SubBlockMachine sb = (SubBlockMachine) this.getSubBlock(meta);
-
-        if (entityPlayer.isSneaking()) {
-            if (sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
+        if (this.getSubBlock(meta) instanceof SubBlockMachine sb) {
+            if (entityPlayer.isSneaking()
+                && sb.onSneakMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ)) {
                 return true;
             }
+            return sb.onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
         }
 
-        return sb.onMachineActivated(world, x, y, z, entityPlayer, side, hitX, hitY, hitZ);
+        return false;
         // ORIG END
     }
 
     @Override
     public boolean hasTileEntity(int metadata) {
-        return this.getSubBlock(metadata)
-            .hasTileEntity(metadata);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb != null) {
+            return sb.hasTileEntity(metadata);
+        }
+        return super.hasTileEntity(metadata);
     }
 
     @Override
     public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
-        this.getSubBlock(metadata)
-            .breakBlock(world, x, y, z, block, metadata);
-        super.breakBlock(world, x, y, z, block, metadata);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb != null) {
+            sb.breakBlock(world, x, y, z, block, metadata);
+        }
     }
 
     //////////////////////////////////////////////////// EVENTS ////////////////////////////////////////////////////
 
     @Override
     public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
-        return this.getSubBlock(metadata)
-            .getExpDrop(world, 0, fortune);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb != null) {
+            return sb.getExpDrop(world, 0, fortune);
+        }
+        return super.getExpDrop(world, metadata, fortune);
     }
 
     /**
@@ -385,20 +410,25 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
      * their own) Args: x, y, z, neighbor Block
      */
     @Override
-    public void onNeighborBlockChange(World w, int x, int y, int z, Block nb) {
-        int meta = w.getBlockMetadata(x, y, z);
-        this.getSubBlock(meta)
-            .onNeighborBlockChange(w, x, y, z, nb);
-        super.onNeighborBlockChange(w, x, y, z, nb);
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            sb.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        }
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
     }
 
     /**
      * Called when a block is placed using its ItemBlock. Args: World, X, Y, Z, side, hitX, hitY, hitZ, block metadata
      */
     @Override
-    public int onBlockPlaced(World w, int x, int y, int z, int side, float hitX, float hitY, float hitZ, int meta) {
-        return this.getSubBlock(meta)
-            .onBlockPlaced(w, x, y, z, side, hitX, hitY, hitZ, meta);
+    public int onBlockPlaced(World worldIn, int x, int y, int z, int side, float subX, float subY, float subZ,
+        int meta) {
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.onBlockPlaced(worldIn, x, y, z, side, subX, subY, subZ, meta);
+        }
+        return super.onBlockPlaced(worldIn, x, y, z, side, subX, subY, subZ, meta);
     }
 
     @Override
@@ -408,39 +438,40 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
 
     @Override
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean willHarvest) {
-        int meta = world.getBlockMetadata(x, y, z);
-        return this.getSubBlock(meta)
-            .removedByPlayer(world, player, x, y, z, willHarvest);
+        final SubBlock sb = this.getSubBlock(world.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.removedByPlayer(world, player, x, y, z, willHarvest);
+        }
+        return super.removedByPlayer(world, player, x, y, z, willHarvest);
     }
 
     @Override
     @Deprecated
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        this.getSubBlock(meta)
-            .removedByPlayer(world, player, x, y, z);
-        return false;
-    }
-
-    @Override
-    public boolean canDropFromExplosion(Explosion kaboom) {
-        return true;
-    }
-
-    @Override
-    public boolean canReplace(World world, int x, int y, int z, int probablySide, ItemStack stack) {
-        if (stack != null) {
-            return this.getSubBlock(stack.getItemDamage())
-                .canReplace(world, x, y, z, probablySide, stack);
+        final SubBlock sb = this.getSubBlock(world.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.removedByPlayer(world, player, x, y, z);
         }
-        return super.canReplace(world, x, y, z, probablySide, stack);
+        return super.removedByPlayer(world, player, x, y, z);
+    }
+
+    @Override
+    public boolean canReplace(World worldIn, int x, int y, int z, int side, ItemStack itemIn) {
+        if (itemIn != null) {
+            final SubBlock sb = this.getSubBlock(itemIn.getItemDamage());
+            if (sb != null) {
+                return sb.canReplace(worldIn, x, y, z, side, itemIn);
+            }
+        }
+        return super.canReplace(worldIn, x, y, z, side, itemIn);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void randomDisplayTick(World world, int x, int y, int z, Random rand) {
-        int meta = world.getBlockMetadata(x, y, z);
-        this.getSubBlock(meta)
-            .randomDisplayTick(world, x, y, z, rand);
+    public void randomDisplayTick(World worldIn, int x, int y, int z, Random random) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            sb.randomDisplayTick(worldIn, x, y, z, random);
+        }
     }
 }

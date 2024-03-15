@@ -3,6 +3,7 @@ package de.katzenpapst.amunra.block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
@@ -20,12 +21,13 @@ public class BlockMetaFake extends BlockBasicMeta implements ITileEntityProvider
         super(name, mat);
     }
 
-    @SuppressWarnings("deprecation")
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        return this.getSubBlock(meta)
-            .getPickBlock(target, world, x, y, z);
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z, EntityPlayer player) {
+        final SubBlock sb = this.getSubBlock(world.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getPickBlock(target, world, x, y, z, player);
+        }
+        return super.getPickBlock(target, world, x, y, z, player);
     }
 
     @Override
@@ -41,13 +43,18 @@ public class BlockMetaFake extends BlockBasicMeta implements ITileEntityProvider
 
     public void makeFakeBlock(World world, BlockVec3 position, BlockVec3 mainBlock, BlockMetaPair bmp) {
         world.setBlock(position.x, position.y, position.z, this, bmp.getMetadata(), 3);
-        ((TileEntityMulti) world.getTileEntity(position.x, position.y, position.z)).setMainBlock(mainBlock);
+        if (world.getTileEntity(position.x, position.y, position.z) instanceof TileEntityMulti multi) {
+            multi.setMainBlock(mainBlock);
+        }
     }
 
     @Override
-    public TileEntity createNewTileEntity(World var1, int meta) {
-        return this.getSubBlock(meta)
-            .createTileEntity(var1, meta);
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.createTileEntity(worldIn, meta);
+        }
+        return null;
     }
 
 }

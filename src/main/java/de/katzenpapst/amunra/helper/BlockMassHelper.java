@@ -20,6 +20,9 @@ public class BlockMassHelper {
 
     public static float getBlockMass(World world, Block block, int meta, int x, int y, int z) {
         // first, the mass
+        if (block == null) {
+            return 0.0f;
+        }
         if (block.isAir(world, x, y, z)) {
             return 0.0F;
         }

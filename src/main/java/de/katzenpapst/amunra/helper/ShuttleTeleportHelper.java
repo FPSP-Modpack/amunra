@@ -22,6 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 import com.google.common.collect.Lists;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.entity.spaceship.EntityShuttle;
 import de.katzenpapst.amunra.item.ItemShuttle;
 import de.katzenpapst.amunra.mothership.Mothership;
@@ -52,7 +53,6 @@ import micdoodle8.mods.galacticraft.core.items.ItemParaChute;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple;
 import micdoodle8.mods.galacticraft.core.network.PacketSimple.EnumSimplePacket;
 import micdoodle8.mods.galacticraft.core.util.ConfigManagerCore;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 import micdoodle8.mods.galacticraft.core.util.WorldUtil;
 
 public class ShuttleTeleportHelper {
@@ -74,8 +74,8 @@ public class ShuttleTeleportHelper {
                     : mcServer.worldServerForDimension(dimensionID);
 
                 if (targetWorld == null) {
-                    System.err.println(
-                        "Cannot Transfer Entity to Dimension: Could not get World for Dimension " + dimensionID);
+                    AmunRa.LOGGER
+                        .error("Cannot Transfer Entity to Dimension: Could not get World for Dimension " + dimensionID);
                     return null;
                 }
 
@@ -111,11 +111,11 @@ public class ShuttleTeleportHelper {
                 player = (EntityPlayerMP) entity;
                 World worldOld = player.worldObj;
                 if (ConfigManagerCore.enableDebug) {
+                    AmunRa.LOGGER.debug("Attempting to remove player from old dimension {}", oldDimID);
                     try {
-                        GCLog.info("DEBUG: Attempting to remove player from old dimension " + oldDimID);
                         ((WorldServer) worldOld).getPlayerManager()
                             .removePlayer(player);
-                        GCLog.info("DEBUG: Successfully removed player from old dimension " + oldDimID);
+                        AmunRa.LOGGER.debug("Successfully removed player from old dimension {}", oldDimID);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -131,9 +131,7 @@ public class ShuttleTeleportHelper {
                 stats.usingPlanetSelectionGui = false;
 
                 player.dimension = dimID;
-                if (ConfigManagerCore.enableDebug) {
-                    GCLog.info("DEBUG: Sending respawn packet to player for dim " + dimID);
-                }
+                AmunRa.LOGGER.debug("Sending respawn packet to player for dim {}", dimID);
                 player.playerNetServerHandler.sendPacket(
                     new S07PacketRespawn(
                         dimID,
@@ -176,9 +174,7 @@ public class ShuttleTeleportHelper {
                 spawnPos = type.getPlayerSpawnLocation((WorldServer) entity.worldObj, player);
                 ChunkCoordIntPair pair = worldNew.getChunkFromChunkCoords(spawnPos.intX(), spawnPos.intZ())
                     .getChunkCoordIntPair();
-                if (ConfigManagerCore.enableDebug) {
-                    GCLog.info("DEBUG: Loading first chunk in new dimension.");
-                }
+                AmunRa.LOGGER.debug("Loading first chunk in new dimension.");
                 ((WorldServer) worldNew).theChunkProviderServer.loadChunk(pair.chunkXPos, pair.chunkZPos);
                 // entity.setLocationAndAngles(spawnPos.x, spawnPos.y, spawnPos.z, entity.rotationYaw,
                 // entity.rotationPitch);
@@ -192,9 +188,11 @@ public class ShuttleTeleportHelper {
                     .setPlayerLocation(spawnPos.x, spawnPos.y, spawnPos.z, entity.rotationYaw, entity.rotationPitch);
                 // worldNew.updateEntityWithOptionalForce(entity, false);
 
-                GCLog.info(
-                    "Server attempting to transfer player " + player.getGameProfile()
-                        .getName() + " to dimension " + worldNew.provider.dimensionId);
+                AmunRa.LOGGER.info(
+                    "Server attempting to transfer player {} to dimension {}",
+                    player.getGameProfile()
+                        .getName(),
+                    worldNew.provider.dimensionId);
 
                 player.theItemInWorldManager.setWorld((WorldServer) worldNew);
                 player.mcServer.getConfigurationManager()
@@ -229,9 +227,11 @@ public class ShuttleTeleportHelper {
                     .setLocationAndAngles(spawnPos.x, spawnPos.y, spawnPos.z, entity.rotationYaw, entity.rotationPitch);
                 worldNew.updateEntityWithOptionalForce(entity, false);
 
-                GCLog.info(
-                    "Server attempting to transfer player " + player.getGameProfile()
-                        .getName() + " within same dimension " + worldNew.provider.dimensionId);
+                AmunRa.LOGGER.info(
+                    "Server attempting to transfer player {} within same dimension {}",
+                    player.getGameProfile()
+                        .getName(),
+                    worldNew.provider.dimensionId);
             }
         }
         GCPlayerStats playerStats = GCPlayerStats.get(player);

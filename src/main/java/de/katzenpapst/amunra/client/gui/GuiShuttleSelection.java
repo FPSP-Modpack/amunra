@@ -23,7 +23,6 @@ import micdoodle8.mods.galacticraft.api.recipe.SpaceStationRecipe;
 import micdoodle8.mods.galacticraft.core.client.gui.screen.GuiCelestialSelection;
 import micdoodle8.mods.galacticraft.core.util.ColorUtil;
 import micdoodle8.mods.galacticraft.core.util.GCCoreUtil;
-import micdoodle8.mods.galacticraft.core.util.GCLog;
 
 public class GuiShuttleSelection extends GuiARCelestialSelection {
 
@@ -407,7 +406,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
 
                     if (this.selectedBody instanceof Satellite) {
                         if (this.spaceStationMap == null) {
-                            GCLog.severe("Please report as a BUG: spaceStationIDs was null.");
+                            AmunRa.LOGGER.error("Please report as a BUG: spaceStationIDs was null.");
                             return false;
                         }
                         Satellite selectedSatellite = (Satellite) this.selectedBody;
@@ -416,8 +415,9 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                             .getStationDimensionID();
                         // No need to check lowercase as selectedStationOwner is taken from keys.
                         if (mapping == null) {
-                            GCLog.severe(
-                                "Problem matching player name in space station check: " + this.selectedStationOwner);
+                            AmunRa.LOGGER.error(
+                                "Problem matching player name in space station check: {}",
+                                this.selectedStationOwner);
                             return false;
                         }
                         int spacestationID = mapping;

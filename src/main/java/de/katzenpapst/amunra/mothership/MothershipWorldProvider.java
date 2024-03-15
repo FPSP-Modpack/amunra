@@ -24,7 +24,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.astronomy.AngleDistance;
 import de.katzenpapst.amunra.block.IMetaBlock;
-import de.katzenpapst.amunra.block.SubBlock;
 import de.katzenpapst.amunra.block.machine.mothershipEngine.MothershipEngineJetBase;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
 import de.katzenpapst.amunra.helper.BlockMassHelper;
@@ -268,7 +267,7 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
     @Override
     public String getDimensionName() {
-        return this.mothershipObj.getLocalizedName();
+        return this.mothershipObj == null ? "Mothership" : this.mothershipObj.getLocalizedName();
     }
 
     @Override
@@ -654,6 +653,9 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
 
         potentialTransitData = new TransitData();
         processChunk(0, 0);
+        if (AmunRa.config.mothershipMass > 0) {
+            this.totalMass = AmunRa.config.mothershipMass;
+        }
 
         // also recalc transit data
         potentialTransitData = calcTheoreticalTransitData();
@@ -765,19 +767,16 @@ public class MothershipWorldProvider extends WorldProviderSpace implements IZero
      */
     protected void processBlock(Block block, int meta, int x, int y, int z) {
         // first, the mass
-        float m = BlockMassHelper.getBlockMass(this.worldObj, block, meta, x, y, z);
-
-        this.totalMass += m;
+        if (AmunRa.config.mothershipMass == 0) {
+            this.totalMass += BlockMassHelper.getBlockMass(this.worldObj, block, meta, x, y, z);
+        }
         this.totalNumBlocks++;
         // do I still need center of mass and such? I don't care for now.
 
         // now, engines
-        if (block instanceof IMetaBlock) {
-            SubBlock actualBlock = ((IMetaBlock) block).getSubBlock(meta);
-            if (actualBlock instanceof MothershipEngineJetBase) {
-                // just save their positions
-                engineLocations.add(new Vector3int(x, y, z));
-            }
+        if (block instanceof IMetaBlock metaBlock && metaBlock.getSubBlock(meta) instanceof MothershipEngineJetBase) {
+            // just save their positions
+            this.engineLocations.add(new Vector3int(x, y, z));
         }
     }
 

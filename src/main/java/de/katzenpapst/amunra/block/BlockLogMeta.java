@@ -36,9 +36,12 @@ public class BlockLogMeta extends BlockBasicMeta {
     public IIcon getIcon(int side, int meta) {
         // /*Face 0 (Bottom Face) Face 1 (Top Face) Face 2 (Northern Face) Face 3 (Southern Face) Face 4 (Western Face)
         // Face 5 (Eastern Face)*/
-        int rotationMeta = (meta & 12) >> 2;
-
-        return getSubBlock(meta).getIcon(side, rotationMeta);
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            final int rotationMeta = (meta & 12) >> 2;
+            return sb.getIcon(side, rotationMeta);
+        }
+        return super.getIcon(side, meta);
     }
 
     @Override

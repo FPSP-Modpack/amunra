@@ -6,7 +6,6 @@ import java.util.List;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.IChunkProvider;
 
@@ -47,11 +46,6 @@ public class HorusChunkProvider extends AmunraChunkProvider {
     @Override
     protected BiomeDecoratorSpace getBiomeGenerator() {
         return new HorusBiomeDecorator();
-    }
-
-    @Override
-    protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBase.desert };
     }
 
     @Override

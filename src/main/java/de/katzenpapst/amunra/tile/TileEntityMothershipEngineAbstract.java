@@ -338,37 +338,15 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
         if (canister != null) {
             if (isItemFuel(canister)) {
                 // attempt to drain it into the tank
-                FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(canister);
-                // int spaceForFluid = this.fuelTank.getCapacity() -
-                /*
-                 * if (this.fuelTank.getFluid() == null || this.fuelTank.getFluid().amount + liquid.amount <=
-                 * this.fuelTank.getCapacity())
-                 * {
-                 */
                 int fluidAmount = this.fuelTank.getFluid() == null ? 0 : this.fuelTank.getFluid().amount;
                 int spaceForFluid = this.fuelTank.getCapacity() - fluidAmount;
 
                 // attempt to drain as much as we have space
-                if (canister.getItem() instanceof IFluidContainerItem) {
-                    // try to do
-                    FluidStack drained = ((IFluidContainerItem) canister.getItem())
-                        .drain(canister, spaceForFluid, true);
+                if (canister.getItem() instanceof IFluidContainerItem fluidCanister) {
+                    // try to drain as much as we have space for
+                    final FluidStack drained = fluidCanister.drain(canister, spaceForFluid, true);
                     if (drained != null && drained.amount > 0) {
-                        //
                         this.fuelTank.fill(new FluidStack(this.fuel, drained.amount), true);
-                        // check how much fluid remains in there
-                        // getFluidForFilledItem doesn't work on IFluidContainerItem
-                        liquid = ((IFluidContainerItem) canister.getItem()).getFluid(canister);
-                        // liquid = FluidContainerRegistry.getFluidForFilledItem(canister);
-                        if (liquid == null || liquid.amount == 0) {
-                            // this should replace the container with it's empty version
-                            ItemStack canisterNew = FluidContainerRegistry.drainFluidContainer(canister);
-                            if (canisterNew != null) {
-                                this.containingItems[0] = canisterNew;
-                            }
-                        }
-                        // if(((IFluidContainerItem)canister.getItem()).)
-                        // FluidContainerRegistry.get
                     }
                 } else {
                     // attempt to drain it all at once
@@ -376,65 +354,14 @@ public abstract class TileEntityMothershipEngineAbstract extends TileBaseElectri
 
                     if (spaceForFluid >= capacity) {
                         // now drain it
-                        this.fuelTank.fill(new FluidStack(this.fuel, capacity), true);
                         ItemStack canisterNew = FluidContainerRegistry.drainFluidContainer(canister);
                         if (canisterNew != null) {
+                            this.fuelTank.fill(new FluidStack(this.fuel, capacity), true);
                             this.containingItems[0] = canisterNew;
                         }
                     }
                 }
-
-                // }
             }
-            /*
-             * if (this.containingItems[0].getItem() instanceof ItemCanisterGeneric)
-             * {
-             * if (this.containingItems[0].getItem() == GCItems.fuelCanister)
-             * {
-             * int originalDamage = this.containingItems[0].getItemDamage();
-             * int used = this.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel, ItemCanisterGeneric.EMPTY -
-             * originalDamage), true);
-             * if (originalDamage + used == ItemCanisterGeneric.EMPTY)
-             * this.containingItems[0] = new ItemStack(GCItems.oilCanister, 1, ItemCanisterGeneric.EMPTY);
-             * else
-             * this.containingItems[0] = new ItemStack(GCItems.fuelCanister, 1, originalDamage + used);
-             * }
-             * }
-             * else
-             * {
-             * final FluidStack liquid = FluidContainerRegistry.getFluidForFilledItem(this.containingItems[0]);
-             * if (liquid != null)
-             * {
-             * boolean isFuel = FluidUtil.testFuel(FluidRegistry.getFluidName(liquid));
-             * if (isFuel)
-             * {
-             * if (this.fuelTank.getFluid() == null || this.fuelTank.getFluid().amount + liquid.amount <=
-             * this.fuelTank.getCapacity())
-             * {
-             * this.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel, liquid.amount), true);
-             * if (FluidContainerRegistry.isBucket(this.containingItems[0]) &&
-             * FluidContainerRegistry.isFilledContainer(this.containingItems[0]))
-             * {
-             * final int amount = this.containingItems[0].stackSize;
-             * if (amount > 1) {
-             * this.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel, (amount - 1) *
-             * FluidContainerRegistry.BUCKET_VOLUME), true);
-             * }
-             * this.containingItems[0] = new ItemStack(Items.bucket, amount);
-             * }
-             * else
-             * {
-             * this.containingItems[0].stackSize--;
-             * if (this.containingItems[0].stackSize == 0)
-             * {
-             * this.containingItems[0] = null;
-             * }
-             * }
-             * }
-             * }
-             * }
-             * }
-             */
         }
     }
 

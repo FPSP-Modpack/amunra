@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 import de.katzenpapst.amunra.tile.TileEntityIsotopeGenerator;
-import micdoodle8.mods.galacticraft.core.energy.item.ItemElectricBase;
+import micdoodle8.mods.galacticraft.api.item.IItemElectric;
 import micdoodle8.mods.galacticraft.core.inventory.SlotSpecific;
 
 public class ContainerAtomBattery extends ContainerWithPlayerInventory {
@@ -12,7 +12,7 @@ public class ContainerAtomBattery extends ContainerWithPlayerInventory {
     public ContainerAtomBattery(InventoryPlayer par1InventoryPlayer, TileEntityIsotopeGenerator solarGen) {
         super(solarGen);
 
-        this.addSlotToContainer(new SlotSpecific(solarGen, 0, 152, 83, ItemElectricBase.class));
+        this.addSlotToContainer(new SlotSpecific(solarGen, 0, 152, 83, IItemElectric.class));
 
         initPlayerInventorySlots(par1InventoryPlayer);
     }

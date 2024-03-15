@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.biome.BiomeGenBase.SpawnListEntry;
 import net.minecraft.world.chunk.IChunkProvider;
 
@@ -27,13 +26,6 @@ public class MaahesChunkProvider extends AmunraChunkProvider {
     protected BiomeDecoratorSpace getBiomeGenerator() {
         // TODO Auto-generated method stub
         return new MaahesBiomeDecorator();
-    }
-
-    // This should be a custom biome for your mod, but I'm opting to go desert instead out of quickness
-    // and the fact that biomes are outside the scope of this tutorial
-    @Override
-    protected BiomeGenBase[] getBiomesForGeneration() {
-        return new BiomeGenBase[] { BiomeGenBase.desert };
     }
 
     @Override

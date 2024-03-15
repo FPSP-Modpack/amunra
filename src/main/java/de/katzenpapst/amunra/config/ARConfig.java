@@ -10,16 +10,12 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.config.Configuration;
 
-import org.apache.logging.log4j.Level;
-
-import cpw.mods.fml.relauncher.FMLRelaunchLog;
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.client.RingsRenderInfo;
 import de.katzenpapst.amunra.helper.AstronomyHelper;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.galaxies.GalaxyRegistry;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
-import micdoodle8.mods.galacticraft.core.Constants;
 import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import micdoodle8.mods.galacticraft.planets.asteroids.AsteroidsModule;
 
@@ -35,7 +31,6 @@ public class ARConfig {
 
     // default tier for my planets and moons
     public int planetDefaultTier = 3;
-
     public boolean villageAdvancedMachines = false;
 
     // ** motherships **
@@ -45,35 +40,31 @@ public class ARConfig {
 
     // motherships will refuse to start transit, if the time is > than this
     public int mothershipMaxTravelTime = 24000;
-
     public float mothershipSpeedFactor = 1.0F;
-
     public float mothershipFuelFactor = 1.0F;
+    public int mothershipMass = 0;
 
     // bodies which motherships cannot orbit
     public Set<String> mothershipBodiesNoOrbit;
+    public String validJetEngineFuel;
+    public String validIonThrusterCoolant;
 
     // *** sky rendering and related ***
     // bodies not to render
     public Set<String> bodiesNoRender;
-
     public Set<String> asteroidBeltBodies;
 
     // star lines for transit sky
     public int mothershipNumStarLines = 400;
-
     public int numAsteroids = 600;
 
     // bodies to render as suns
     public HashMap<String, Vector3> sunColorMap = new HashMap<String, Vector3>();
-
     public HashMap<String, RingsRenderInfo> ringMap = new HashMap<String, RingsRenderInfo>();
 
     // ** IDs **
     public int schematicIdShuttle = 11;
-
     public int guiIdShuttle = 8;
-
     public float hydroponicsFactor = 1.0F;
 
     // ** extra default stuff **
@@ -184,12 +175,29 @@ public class ARConfig {
             Float.MAX_VALUE,
             "A factor to be multiplied onto the fuel usages of mothership engines. Higher values = higher fuel usage");
 
+        this.mothershipMass = config.getInt(
+            "mothershipMass",
+            "motherships",
+            this.mothershipMass,
+            0,
+            Integer.MAX_VALUE,
+            "If greater than zero, overrides the mothership's mass. If zero, the mass will be calculated based on the blocks used to build the mothership.");
+
         mothershipBodiesNoOrbit = configGetStringHashSet(
             config,
             "bodiesNoOrbit",
             "motherships",
             emptySet,
             "Bodies which should not be orbitable by motherships");
+
+        this.validJetEngineFuel = config
+            .getString("validJetEngineFuel", "motherships", "fuel", "This fluid can be used by Jet Engines");
+
+        this.validIonThrusterCoolant = config.getString(
+            "validIonThrusterCoolant",
+            "motherships",
+            "liquidnitrogen",
+            "This fluid can be used by Ion Thrusters");
 
         // mothershipUserRestriction = config.getBoolean("restrictMothershipToOwner", "mothership", true, "If true, only
         // the one who built the mothership will be able to use it. If false, anyone can");
@@ -243,8 +251,7 @@ public class ARConfig {
         for (String str : sunData) {
             String[] parts1 = str.split(":", 2);
             if (parts1.length < 2) {
-                FMLRelaunchLog
-                    .log(Constants.MOD_NAME_SIMPLE, Level.WARN, "'" + parts1 + "' is not a valid sun configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid sun configuration", str);
                 continue;
             }
             String body = parts1[0];
@@ -274,8 +281,7 @@ public class ARConfig {
         for (String str : ringData) {
             String[] parts1 = str.split(":", 5);
             if (parts1.length < 5) {
-                FMLRelaunchLog
-                    .log(Constants.MOD_NAME_SIMPLE, Level.WARN, "'" + str + "' is not a valid ring configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
                 continue;
             }
             String body = parts1[0];
@@ -285,8 +291,7 @@ public class ARConfig {
             String textureName = parts1[4];
 
             if (gapStart <= 0 || gapEnd <= 0 || gapEnd <= gapStart) {
-                FMLRelaunchLog
-                    .log(Constants.MOD_NAME_SIMPLE, Level.WARN, "'" + str + "' is not a valid ring configuration");
+                AmunRa.LOGGER.warn("'{}' is not a valid ring configuration", str);
                 continue;
             }
 

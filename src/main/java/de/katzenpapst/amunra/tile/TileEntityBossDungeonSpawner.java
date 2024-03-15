@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.helper.NbtHelper;
 import de.katzenpapst.amunra.mob.entity.EntityMummyBoss;
 import de.katzenpapst.amunra.mob.entity.IAmunRaBoss;
@@ -101,7 +102,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                         isBossInRoom = true;
                         this.worldObj.spawnEntityInWorld((Entity) this.boss);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        AmunRa.LOGGER.warn("Failed to spawn boss", e);
                     }
                 }
             } else {
@@ -143,7 +144,7 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
          * }
          * catch (Exception e)
          * {
-         * e.printStackTrace();
+         * AmunRa.LOGGER.warn("Failed to parse bossClass from NBT data", e);
          * }
          */
 

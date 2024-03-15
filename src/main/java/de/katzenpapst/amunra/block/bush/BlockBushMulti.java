@@ -77,9 +77,11 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * info source: http://www.minecraftforge.net/forum/index.php?topic=22571.0
      */
     @Override
-    public boolean func_149851_a(World world, int x, int y, int z, boolean isWorldRemote) {
-        int meta = world.getBlockMetadata(x, y, z);
-        return ((SubBlockBush) this.getSubBlock(meta)).func_149851_a(world, x, y, z, isWorldRemote);
+    public boolean func_149851_a(World worldIn, int x, int y, int z, boolean isClient) {
+        if (this.getSubBlock(worldIn.getBlockMetadata(x, y, z)) instanceof SubBlockBush bush) {
+            return bush.func_149851_a(worldIn, x, y, z, isClient);
+        }
+        return false;
     }
 
     /**
@@ -87,9 +89,11 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * I usually just return true, but depends on your crop.
      */
     @Override
-    public boolean func_149852_a(World world, Random rand, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        return ((SubBlockBush) this.getSubBlock(meta)).func_149852_a(world, rand, x, y, z);
+    public boolean func_149852_a(World worldIn, Random random, int x, int y, int z) {
+        if (this.getSubBlock(worldIn.getBlockMetadata(x, y, z)) instanceof SubBlockBush bush) {
+            return bush.func_149852_a(worldIn, random, x, y, z);
+        }
+        return false;
     }
 
     /**
@@ -99,10 +103,10 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      *
      */
     @Override
-    public void func_149853_b(World world, Random rand, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        ((SubBlockBush) this.getSubBlock(meta)).func_149853_b(world, rand, x, y, z);
-
+    public void func_149853_b(World worldIn, Random random, int x, int y, int z) {
+        if (this.getSubBlock(worldIn.getBlockMetadata(x, y, z)) instanceof SubBlockBush bush) {
+            bush.func_149853_b(worldIn, random, x, y, z);
+        }
     }
 
     /**
@@ -110,8 +114,7 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
      * cleared to be reused)
      */
     @Override
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World p_149668_1_, int p_149668_2_, int p_149668_3_,
-        int p_149668_4_) {
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World worldIn, int x, int y, int z) {
         return null;
     }
 
@@ -142,8 +145,10 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
 
     @Override
     public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-        return ((SubBlockBush) this.getSubBlock(meta)).getPlantType(world, x, y, z);
+        if (this.getSubBlock(world.getBlockMetadata(x, y, z)) instanceof SubBlockBush bush) {
+            return bush.getPlantType(world, x, y, z);
+        }
+        return EnumPlantType.Plains;
     }
 
     @Override
@@ -157,11 +162,14 @@ public class BlockBushMulti extends BlockBasicMeta implements IGrowable, ISheara
     }
 
     public boolean canPlaceOn(BlockMetaPair blockToCheck, int meta) {
-        return ((SubBlockBush) this.getSubBlock(meta)).canPlaceOn(blockToCheck, 0);
+        return this.canPlaceOn(blockToCheck.getBlock(), blockToCheck.getMetadata(), meta);
     }
 
     public boolean canPlaceOn(Block blockToCheck, int metaToCheck, int meta) {
-        return ((SubBlockBush) this.getSubBlock(meta)).canPlaceOn(blockToCheck, metaToCheck, 0);
+        if (this.getSubBlock(meta) instanceof SubBlockBush bush) {
+            return bush.canPlaceOn(blockToCheck, metaToCheck, 0);
+        }
+        return false;
     }
 
     /**

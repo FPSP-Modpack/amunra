@@ -58,8 +58,11 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
 
     @Override
     public String getUnlocalizedSubBlockName(int meta) {
-        return this.getSubBlock(meta)
-            .getUnlocalizedName() + ".slab";
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.getUnlocalizedName() + ".slab";
+        }
+        return super.getUnlocalizedSubBlockName(meta);
     }
 
     @Override
@@ -105,11 +108,7 @@ public class BlockDoubleslabMeta extends BlockBasicMeta {
     }
 
     public BlockMetaPair addSubBlock(int meta) {
-
-        // find the basedOn block
-        SubBlock sb = slabMetablock.getSubBlock(meta);
-
-        return addSubBlock(meta, sb);
+        return this.addSubBlock(meta, this.slabMetablock.getSubBlock(meta));
     }
 
     @Override

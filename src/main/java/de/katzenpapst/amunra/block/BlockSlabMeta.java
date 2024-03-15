@@ -40,8 +40,11 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public String getUnlocalizedSubBlockName(int meta) {
-        return this.getSubBlock(meta)
-            .getUnlocalizedName() + ".slab";
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.getUnlocalizedName() + ".slab";
+        }
+        return this.getUnlocalizedName() + ".slab";
     }
 
     public void setDoubleslabMeta(BlockDoubleslabMeta doubleslabMetablock) {
@@ -94,7 +97,11 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public IIcon getIcon(int side, int meta) {
-        return getSubBlock(meta).getIcon(side, 0);
+        final SubBlock sb = this.getSubBlock(meta);
+        if (sb != null) {
+            return sb.getIcon(side, 0);
+        }
+        return super.getIcon(side, meta);
     }
 
     @Override
@@ -170,28 +177,33 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     }
 
     @Override
-    public String func_150002_b(int meta) {
+    public String func_150002_b(int p_150002_1_) {
         // something like getNameByMeta
         // net.minecraft.item.ItemSlab calls this
-        return this.getUnlocalizedName() + "."
-            + this.getSubBlock(meta)
-                .getUnlocalizedName();
+        final SubBlock sb = this.getSubBlock(p_150002_1_);
+        if (sb != null) {
+            return this.getUnlocalizedName() + "." + sb.getUnlocalizedName();
+        }
+        return this.getUnlocalizedName();
     }
 
     @Override
     public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
         double explosionY, double explosionZ) {
-        int metadata = world.getBlockMetadata(x, y, z);
-
-        return getSubBlock(metadata)
-            .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        final SubBlock sb = this.getSubBlock(world.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        }
+        return super.getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
-    public float getBlockHardness(World world, int x, int y, int z) {
-        int meta = world.getBlockMetadata(x, y, z);
-
-        return getSubBlock(meta).getBlockHardness(world, x, y, z);
+    public float getBlockHardness(World worldIn, int x, int y, int z) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            return sb.getBlockHardness(worldIn, x, y, z);
+        }
+        return super.getBlockHardness(worldIn, x, y, z);
     }
 
     @Override
@@ -201,8 +213,11 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
-        return this.getSubBlock(metadata)
-            .getExpDrop(world, 0, fortune);
+        final SubBlock sb = this.getSubBlock(metadata);
+        if (sb != null) {
+            return sb.getExpDrop(world, 0, fortune);
+        }
+        return super.getExpDrop(world, metadata, fortune);
     }
 
     /**
@@ -210,19 +225,18 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * their own) Args: x, y, z, neighbor Block
      */
     @Override
-    public void onNeighborBlockChange(World w, int x, int y, int z, Block nb) {
-        int meta = w.getBlockMetadata(x, y, z);
-        this.getSubBlock(meta)
-            .onNeighborBlockChange(w, x, y, z, nb);
-        super.onNeighborBlockChange(w, x, y, z, nb);
+    public void onNeighborBlockChange(World worldIn, int x, int y, int z, Block neighbor) {
+        final SubBlock sb = this.getSubBlock(worldIn.getBlockMetadata(x, y, z));
+        if (sb != null) {
+            sb.onNeighborBlockChange(worldIn, x, y, z, neighbor);
+        }
+        super.onNeighborBlockChange(worldIn, x, y, z, neighbor);
     }
 
     @Override
     public float getMass(World w, int x, int y, int z, int meta) {
-        SubBlock sb = this.getSubBlock(meta);
-        float parentMass = BlockMassHelper.getBlockMass(w, sb, meta, x, y, z);
         // return half the mass, because slab
-        return parentMass / 2.0F;
+        return BlockMassHelper.getBlockMass(w, this.getSubBlock(meta), meta, x, y, z) / 2.0f;
     }
 
     /**
@@ -234,8 +248,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      */
     @Override
     public String getHarvestTool(int metadata) {
-        return this.getSubBlock(metadata)
-            .getHarvestTool(metadata);
+        final SubBlock sb = this.getSubBlock(metadata);
+        return sb == null ? null : sb.getHarvestTool(metadata);
     }
 
     /**
@@ -247,8 +261,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      */
     @Override
     public int getHarvestLevel(int metadata) {
-        return this.getSubBlock(metadata)
-            .getHarvestLevel(metadata);
+        final SubBlock sb = this.getSubBlock(metadata);
+        return sb == null ? -1 : sb.getHarvestLevel(metadata);
     }
 
     /**

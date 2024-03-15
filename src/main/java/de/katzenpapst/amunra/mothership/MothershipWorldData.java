@@ -1,11 +1,12 @@
 package de.katzenpapst.amunra.mothership;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -208,33 +209,21 @@ public class MothershipWorldData extends WorldSavedData {
      * @return
      */
     public int getNumMothershipsForParent(CelestialBody parent) {
-        int result = 0;
-
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet()
-            .iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = pair.getValue();
-
-            CelestialBody curParent = curM.getParent();
-            if (curParent != null && curParent.equals(parent)) {
-                result++;
-            }
+        if (parent == null) {
+            return 0;
         }
-
-        return result;
+        return (int) this.mothershipIdList.values()
+            .stream()
+            .map(Mothership::getParent)
+            .filter(parent::equals)
+            .count();
     }
 
     public boolean hasMothershipsInOrbit(CelestialBody parent) {
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet()
-            .iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = pair.getValue();
-
-            if (curM.getParent() == parent) return true;
-        }
-        return false;
+        return parent != null && this.mothershipIdList.values()
+            .stream()
+            .map(Mothership::getParent)
+            .anyMatch(parent::equals);
     }
 
     /**
@@ -244,21 +233,13 @@ public class MothershipWorldData extends WorldSavedData {
      * @return
      */
     public List<Mothership> getMothershipsForParent(CelestialBody parent) {
-        LinkedList<Mothership> result = new LinkedList<Mothership>();
-
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet()
-            .iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = pair.getValue();
-
-            CelestialBody curParent = curM.getParent();
-            if (curParent != null && curParent.equals(parent)) {
-                result.add(curM);
-            }
+        if (parent == null) {
+            return new ArrayList<>();
         }
-
-        return result;
+        return this.mothershipIdList.values()
+            .stream()
+            .filter(ship -> parent.equals(ship.getParent()))
+            .collect(Collectors.toList());
     }
 
     /**
@@ -268,20 +249,10 @@ public class MothershipWorldData extends WorldSavedData {
      * @return
      */
     public int getNumMothershipsForPlayer(PlayerID player) {
-        int num = 0;
-
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet()
-            .iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = pair.getValue();
-
-            if (curM.isPlayerOwner(player)) {
-                num++;
-            }
-        }
-
-        return num;
+        return (int) this.mothershipIdList.values()
+            .stream()
+            .filter(ship -> ship.isPlayerOwner(player))
+            .count();
     }
 
     public int getNumMothershipsForPlayer(EntityPlayer player) {
@@ -324,17 +295,13 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(String name) {
-        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet()
-            .iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, Mothership> pair = it.next();
-            Mothership curM = pair.getValue();
-            if (curM.getName()
-                .equals(name)) {
-                return curM;
-            }
-        }
-        return null;
+        return this.mothershipIdList.values()
+            .stream()
+            .filter(
+                t -> t.getName()
+                    .equals(name))
+            .findFirst()
+            .orElse(null);
     }
 
     /**

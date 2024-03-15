@@ -2,10 +2,13 @@ package de.katzenpapst.amunra.world.mapgen.village;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.util.MathHelper;
 
+import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
 
@@ -26,12 +29,12 @@ public class GridVillageGenerator extends StructureGenerator {
      * }
      * }
      */
-    protected ArrayList<SubComponentData> components;
+    protected List<SubComponentData> components;
 
     protected int gridSize = 32;
 
-    protected HashMap<Long, GridVillageStart> structureMap = new HashMap<Long, GridVillageStart>(); // Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_,
-                                                                                                    // p_151538_3_)
+    protected Map<Long, GridVillageStart> structureMap = new HashMap<>(); // Long.valueOf(ChunkCoordIntPair.chunkXZ2Int(p_151538_2_,
+                                                                          // p_151538_3_)
 
     public void addComponentType(Class<? extends GridVillageComponent> clazz, float probability) {
         addComponentType(clazz, probability, 0, 0);
@@ -39,12 +42,11 @@ public class GridVillageGenerator extends StructureGenerator {
 
     public void addComponentType(Class<? extends GridVillageComponent> clazz, float probability, int minAmount,
         int maxAmount) {
-        SubComponentData entry = new SubComponentData(clazz, probability, minAmount, maxAmount);
-        components.add(entry);
+        components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
     }
 
     public GridVillageGenerator() {
-        components = new ArrayList<SubComponentData>();
+        components = new ArrayList<>();
     }
 
     @Override
@@ -81,8 +83,7 @@ public class GridVillageGenerator extends StructureGenerator {
         Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
         GridVillageStart start = new GridVillageStart(this.worldObj, xChunkCoord, zChunkCoord, rand4structure);
-        @SuppressWarnings("unchecked")
-        ArrayList<Object> compList = generateSubComponents(components, rand4structure, 0);
+        List<BaseStructureComponent> compList = generateSubComponents(components, rand4structure, 0);
         /*
          * ArrayList compList = new ArrayList();
          * // now prepare the actual component list

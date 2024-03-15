@@ -1,17 +1,18 @@
 package de.katzenpapst.amunra.world.mapgen.village;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 
-import cpw.mods.fml.common.FMLLog;
+import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.block.ARBlocks;
 import de.katzenpapst.amunra.helper.CoordHelper;
+import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
@@ -43,7 +44,7 @@ public class GridVillageStart extends BaseStructureStart {
         int startBlockX = CoordHelper.chunkToMinBlock(chunkX) + this.startX;
         int startBlockZ = CoordHelper.chunkToMinBlock(chunkZ) + this.startZ;
 
-        FMLLog.info("Generating the Village at x=" + startBlockX + ", z=" + startBlockZ);
+        AmunRa.LOGGER.debug("Generating the Village at x={}, z={}", startBlockX, startBlockZ);
 
         componentsByGrid = new HashMap<Integer, GridVillageComponent>();
     }
@@ -67,7 +68,7 @@ public class GridVillageStart extends BaseStructureStart {
         return true;
     }
 
-    public void setComponents(ArrayList<Object> components) {
+    public void setComponents(List<BaseStructureComponent> components) {
 
         // byte should be enough for gridsize
 
@@ -92,24 +93,20 @@ public class GridVillageStart extends BaseStructureStart {
         structBB.minY = 0;
         structBB.maxY = 255;
 
-        // hack for dummy entries for shuffling
-        Object dummyComponent = new Object();
-
         int totalGridElems = gridSideLength * gridSideLength;
         // pad the components
         for (int i = numGridElements; i < totalGridElems; i++) {
-            components.add(dummyComponent);
+            components.add(GridVillageComponent.DUMMY);
         }
 
         Collections.shuffle(components, this.rand);
 
         byte gridX = 0;
         byte gridZ = 0;
-        for (Object comp : components) {
-            if (!(comp instanceof GridVillageComponent)) {
+        for (BaseStructureComponent comp : components) {
+            if (comp == GridVillageComponent.DUMMY || !(comp instanceof GridVillageComponent)) {
                 continue;
             }
-            GridVillageComponent vComp = ((GridVillageComponent) comp);
             int index = gridX + (gridZ << 8);
 
             StructureBoundingBox componentBox = new StructureBoundingBox(
@@ -121,11 +118,11 @@ public class GridVillageStart extends BaseStructureStart {
             componentBox.getXSize();
             //
             // cmp.setCoordMode(this.rand.nextInt(4));
-            vComp.setStructureBoundingBox(componentBox);
-            vComp.setCoordMode(this.rand.nextInt(4));
+            comp.setStructureBoundingBox(componentBox);
+            comp.setCoordMode(this.rand.nextInt(4));
             // vComp.setCoordMode(3);
-            vComp.setParent(this);
-            componentsByGrid.put(index, vComp);
+            comp.setParent(this);
+            componentsByGrid.put(index, (GridVillageComponent) comp);
             gridX++;
             if (gridX >= gridSideLength) {
                 gridX = 0;

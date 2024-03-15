@@ -1,11 +1,13 @@
 package de.katzenpapst.amunra.world.mapgen.pyramid;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.util.MathHelper;
 
 import de.katzenpapst.amunra.block.ARBlocks;
+import de.katzenpapst.amunra.world.mapgen.BaseStructureComponent;
 import de.katzenpapst.amunra.world.mapgen.BaseStructureStart;
 import de.katzenpapst.amunra.world.mapgen.StructureGenerator;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
@@ -16,8 +18,8 @@ public class PyramidGenerator extends StructureGenerator {
     protected BlockMetaPair floorMaterial = ARBlocks.blockSmoothBasalt;
     protected BlockMetaPair fillMaterial = ARBlocks.blockBasaltBrick;
 
-    protected ArrayList<SubComponentData> components = new ArrayList<SubComponentData>();
-    protected ArrayList<SubComponentData> potentialMainRooms = new ArrayList<SubComponentData>();
+    protected List<SubComponentData> components = new ArrayList<>();
+    protected List<SubComponentData> potentialMainRooms = new ArrayList<>();
 
     @Override
     protected boolean canGenerateHere(int chunkX, int chunkZ, Random rand) {
@@ -45,13 +47,11 @@ public class PyramidGenerator extends StructureGenerator {
     }
 
     public void addComponentType(Class<? extends PyramidRoom> clazz, float probability, int minAmount, int maxAmount) {
-        SubComponentData entry = new SubComponentData(clazz, probability, minAmount, maxAmount);
-        components.add(entry);
+        components.add(new SubComponentData(clazz, probability, minAmount, maxAmount));
     }
 
     public void addMainRoomType(Class<? extends PyramidRoom> clazz, float probability) {
-        SubComponentData entry = new SubComponentData(clazz, probability, 0, 0);
-        potentialMainRooms.add(entry);
+        potentialMainRooms.add(new SubComponentData(clazz, probability, 0, 0));
     }
 
     @Override
@@ -63,8 +63,7 @@ public class PyramidGenerator extends StructureGenerator {
 
         Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
-        @SuppressWarnings("unchecked")
-        ArrayList<PyramidRoom> compList = generateSubComponents(components, rand4structure, 12);
+        List<BaseStructureComponent> compList = generateSubComponents(components, rand4structure, 12);
 
         p.setSmallRooms(compList);
 
