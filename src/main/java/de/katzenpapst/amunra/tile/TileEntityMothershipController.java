@@ -13,33 +13,27 @@ public class TileEntityMothershipController extends TileEntityAdvanced {
 
     private SubBlockMachine subBlock = null;
 
-    public TileEntityMothershipController() { }
+    public TileEntityMothershipController() {}
 
-
-    public SubBlockMachine getSubBlock()
-    {
-        if(subBlock == null) {
-            subBlock = (SubBlockMachine) ((BlockMachineMeta)this.getBlockType()).getSubBlock(this.getBlockMetadata());
+    public SubBlockMachine getSubBlock() {
+        if (subBlock == null) {
+            subBlock = (SubBlockMachine) ((BlockMachineMeta) this.getBlockType()).getSubBlock(this.getBlockMetadata());
         }
         return subBlock;
     }
 
-
     @Override
-    public double getPacketRange()
-    {
+    public double getPacketRange() {
         return 12.0D;
     }
 
     @Override
-    public int getPacketCooldown()
-    {
+    public int getPacketCooldown() {
         return 3;
     }
 
     @Override
-    public boolean isNetworkedTile()
-    {
+    public boolean isNetworkedTile() {
         return true;
     }
 

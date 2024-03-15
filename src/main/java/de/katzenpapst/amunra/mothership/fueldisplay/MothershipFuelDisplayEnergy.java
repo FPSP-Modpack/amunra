@@ -1,10 +1,11 @@
 package de.katzenpapst.amunra.mothership.fueldisplay;
 
-import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
-import micdoodle8.mods.galacticraft.core.items.GCItems;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
+
+import micdoodle8.mods.galacticraft.core.energy.EnergyDisplayHelper;
+import micdoodle8.mods.galacticraft.core.items.GCItems;
 
 public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 
@@ -17,7 +18,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     }
 
     public static MothershipFuelDisplayEnergy getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new MothershipFuelDisplayEnergy();
         }
         return instance;
@@ -26,7 +27,8 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
     @Override
     public IIcon getIcon() {
 
-        return stack.getItem().getIconFromDamage(stack.getItemDamage());
+        return stack.getItem()
+            .getIconFromDamage(stack.getItemDamage());
     }
 
     @Override
@@ -50,7 +52,6 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
         return 1;
     }
 
-
     @Override
     public String formatValue(float value) {
         // EnergyDisplayHelper
@@ -59,7 +60,7 @@ public class MothershipFuelDisplayEnergy extends MothershipFuelDisplay {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof MothershipFuelDisplayEnergy)) {
+        if (!(other instanceof MothershipFuelDisplayEnergy)) {
             return false;
         }
         return other == this;

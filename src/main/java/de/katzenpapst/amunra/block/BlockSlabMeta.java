@@ -4,13 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import de.katzenpapst.amunra.AmunRa;
-import de.katzenpapst.amunra.helper.BlockMassHelper;
-import de.katzenpapst.amunra.item.ItemSlabMulti;
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -23,6 +16,14 @@ import net.minecraft.util.IIcon;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import de.katzenpapst.amunra.AmunRa;
+import de.katzenpapst.amunra.helper.BlockMassHelper;
+import de.katzenpapst.amunra.item.ItemSlabMulti;
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBlock {
 
@@ -39,7 +40,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public String getUnlocalizedSubBlockName(int meta) {
-        return this.getSubBlock(meta).getUnlocalizedName()+".slab";
+        return this.getSubBlock(meta)
+            .getUnlocalizedName() + ".slab";
     }
 
     public void setDoubleslabMeta(BlockDoubleslabMeta doubleslabMetablock) {
@@ -48,16 +50,17 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public BlockMetaPair addSubBlock(int meta, SubBlock sb) {
-        if(meta >= subBlocksArray.length || meta < 0) {
-            throw new IllegalArgumentException("Meta "+meta+" must be <= "+(subBlocksArray.length-1)+" && >= 0");
+        if (meta >= subBlocksArray.length || meta < 0) {
+            throw new IllegalArgumentException(
+                "Meta " + meta + " must be <= " + (subBlocksArray.length - 1) + " && >= 0");
         }
 
-        if(subBlocksArray[meta] != null) {
-            throw new IllegalArgumentException("Meta "+meta+" is already in use");
+        if (subBlocksArray[meta] != null) {
+            throw new IllegalArgumentException("Meta " + meta + " is already in use");
         }
 
-        if(nameMetaMap.get(sb.getUnlocalizedName()) != null) {
-            throw new IllegalArgumentException("Name "+sb.getUnlocalizedName()+" is already in use");
+        if (nameMetaMap.get(sb.getUnlocalizedName()) != null) {
+            throw new IllegalArgumentException("Name " + sb.getUnlocalizedName() + " is already in use");
         }
         // sb.setParent(this);
         nameMetaMap.put(sb.getUnlocalizedName(), meta);
@@ -67,15 +70,14 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     public BlockMetaPair addSubBlock(int meta, BlockMetaPair basedOn) {
 
-        return addSubBlock(meta, ((IMetaBlock)basedOn.getBlock()).getSubBlock(basedOn.getMetadata()));
+        return addSubBlock(meta, ((IMetaBlock) basedOn.getBlock()).getSubBlock(basedOn.getMetadata()));
     }
-
 
     @Override
     public int getMetaByName(String name) {
         Integer i = nameMetaMap.get(name);
-        if(i == null) {
-            throw new IllegalArgumentException("Subblock "+name+" doesn't exist");
+        if (i == null) {
+            throw new IllegalArgumentException("Subblock " + name + " doesn't exist");
         }
         return i;
     }
@@ -97,10 +99,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     @SideOnly(Side.CLIENT)
-    public void registerBlockIcons(IIconRegister par1IconRegister)
-    {
-        for(SubBlock sb: subBlocksArray) {
-            if(sb != null) {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
+        for (SubBlock sb : subBlocksArray) {
+            if (sb != null) {
                 sb.registerBlockIcons(par1IconRegister);
             }
         }
@@ -108,42 +109,36 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @SideOnly(Side.CLIENT)
     @Override
-    public CreativeTabs getCreativeTabToDisplayOn()
-    {
+    public CreativeTabs getCreativeTabToDisplayOn() {
         return AmunRa.arTab;
     }
 
     @Override
-    public Item getItemDropped(int meta, Random random, int fortune)
-    {
+    public Item getItemDropped(int meta, Random random, int fortune) {
         return Item.getItemFromBlock(this);
     }
 
     @Override
-    public int damageDropped(int meta)
-    {
+    public int damageDropped(int meta) {
         return this.getDistinctionMeta(meta);
     }
 
     @Override
-    public int getDamageValue(World world, int x, int y, int z)
-    {
+    public int getDamageValue(World world, int x, int y, int z) {
         return world.getBlockMetadata(x, y, z);
     }
 
     @Override
-    public int quantityDropped(int meta, int fortune, Random random)
-    {
+    public int quantityDropped(int meta, int fortune, Random random) {
         return 1;
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @SideOnly(Side.CLIENT)
     @Override
-    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List)
-    {
-        for(int i = 0; i < this.subBlocksArray.length; i++) {
-            if(subBlocksArray[i] != null) {
+    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
+        for (int i = 0; i < this.subBlocksArray.length; i++) {
+            if (subBlocksArray[i] != null) {
                 par3List.add(new ItemStack(par1, 1, i));
             }
         }
@@ -151,11 +146,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @SuppressWarnings("deprecation")
     @Override
-    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
-    {
+    public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
-        if (getSubBlock(meta) != null)
-        {
+        if (getSubBlock(meta) != null) {
             return new ItemStack(Item.getItemFromBlock(this), 1, getDistinctionMeta(meta));
         }
 
@@ -167,9 +160,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
         // doubleslabMetablock
         GameRegistry.registerBlock(this, ItemSlabMulti.class, this.getUnlocalizedName(), this, doubleslabMetablock);
 
-        for(int i=0;i<subBlocksArray.length;i++) {
+        for (int i = 0; i < subBlocksArray.length; i++) {
             SubBlock sb = subBlocksArray[i];
-            if(sb != null) {
+            if (sb != null) {
 
                 this.setHarvestLevel(sb.getHarvestTool(0), sb.getHarvestLevel(0), i);
             }
@@ -180,23 +173,23 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     public String func_150002_b(int meta) {
         // something like getNameByMeta
         // net.minecraft.item.ItemSlab calls this
-        return this.getUnlocalizedName()+"."+this.getSubBlock(meta).getUnlocalizedName();
+        return this.getUnlocalizedName() + "."
+            + this.getSubBlock(meta)
+                .getUnlocalizedName();
     }
 
-
     @Override
-    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX, double explosionY, double explosionZ)
-    {
+    public float getExplosionResistance(Entity par1Entity, World world, int x, int y, int z, double explosionX,
+        double explosionY, double explosionZ) {
         int metadata = world.getBlockMetadata(x, y, z);
 
-        return getSubBlock(metadata).getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
+        return getSubBlock(metadata)
+            .getExplosionResistance(par1Entity, world, x, y, z, explosionX, explosionY, explosionZ);
     }
 
     @Override
-    public float getBlockHardness(World world, int x, int y, int z)
-    {
+    public float getBlockHardness(World world, int x, int y, int z) {
         int meta = world.getBlockMetadata(x, y, z);
-
 
         return getSubBlock(meta).getBlockHardness(world, x, y, z);
     }
@@ -208,7 +201,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
 
     @Override
     public int getExpDrop(IBlockAccess world, int metadata, int fortune) {
-        return this.getSubBlock(metadata).getExpDrop(world, 0, fortune);
+        return this.getSubBlock(metadata)
+            .getExpDrop(world, 0, fortune);
     }
 
     /**
@@ -218,7 +212,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
     @Override
     public void onNeighborBlockChange(World w, int x, int y, int z, Block nb) {
         int meta = w.getBlockMetadata(x, y, z);
-        this.getSubBlock(meta).onNeighborBlockChange(w, x, y, z, nb);
+        this.getSubBlock(meta)
+            .onNeighborBlockChange(w, x, y, z, nb);
         super.onNeighborBlockChange(w, x, y, z, nb);
     }
 
@@ -227,7 +222,7 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
         SubBlock sb = this.getSubBlock(meta);
         float parentMass = BlockMassHelper.getBlockMass(w, sb, meta, x, y, z);
         // return half the mass, because slab
-        return parentMass/2.0F;
+        return parentMass / 2.0F;
     }
 
     /**
@@ -238,9 +233,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * @return
      */
     @Override
-    public String getHarvestTool(int metadata)
-    {
-        return this.getSubBlock(metadata).getHarvestTool(metadata);
+    public String getHarvestTool(int metadata) {
+        return this.getSubBlock(metadata)
+            .getHarvestTool(metadata);
     }
 
     /**
@@ -251,9 +246,9 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * @return Harvest level, or -1 if not the specified tool type.
      */
     @Override
-    public int getHarvestLevel(int metadata)
-    {
-        return this.getSubBlock(metadata).getHarvestLevel(metadata);
+    public int getHarvestLevel(int metadata) {
+        return this.getSubBlock(metadata)
+            .getHarvestLevel(metadata);
     }
 
     /**
@@ -265,8 +260,8 @@ public class BlockSlabMeta extends BlockSlab implements IMetaBlock, IMassiveBloc
      * @return
      */
     @Override
-    public boolean isToolEffective(String type, int metadata)
-    {
-        return this.getHarvestTool(metadata).equals(type);
+    public boolean isToolEffective(String type, int metadata) {
+        return this.getHarvestTool(metadata)
+            .equals(type);
     }
 }

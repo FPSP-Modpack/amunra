@@ -1,14 +1,15 @@
 package de.katzenpapst.amunra.world.maahes;
 
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.world.AmunraWorldChunkManager;
 import de.katzenpapst.amunra.world.AmunraWorldProvider;
-import net.minecraft.world.biome.WorldChunkManager;
-import net.minecraft.world.chunk.IChunkProvider;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
-public class MaahesWorldProvider extends AmunraWorldProvider  {
+public class MaahesWorldProvider extends AmunraWorldProvider {
 
     /**
      * Determines the rate to spawn meteors in this planet. Lower means MORE
@@ -55,7 +56,7 @@ public class MaahesWorldProvider extends AmunraWorldProvider  {
 
     @Override
     public Vector3 getSkyColor() {
-        return new Vector3(109.0F/255.0F, 196.0F/255.0F, 167.0F/255.0F);
+        return new Vector3(109.0F / 255.0F, 196.0F / 255.0F, 167.0F / 255.0F);
     }
 
     @Override
@@ -88,9 +89,9 @@ public class MaahesWorldProvider extends AmunraWorldProvider  {
         return 0.7F;
     }
 
-	@Override
-	public boolean canSpaceshipTierPass(int tier) {
-    	return tier >= AmunRa.instance.moonMaahes.getTierRequirement();
-	}
+    @Override
+    public boolean canSpaceshipTierPass(int tier) {
+        return tier >= AmunRa.instance.moonMaahes.getTierRequirement();
+    }
 
 }

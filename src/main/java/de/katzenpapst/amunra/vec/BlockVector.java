@@ -1,7 +1,8 @@
 package de.katzenpapst.amunra.vec;
 
-import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import net.minecraft.world.World;
+
+import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 
 /**
  * This is supposed to hold everything necessary to find a block
@@ -31,9 +32,9 @@ public class BlockVector extends Vector3int {
 
     @Override
     public boolean equals(Object other) {
-        if(!(other instanceof BlockVector)) {
+        if (!(other instanceof BlockVector)) {
             return false;
         }
-        return world.equals(((BlockVector)other).world) && super.equals(other);
+        return world.equals(((BlockVector) other).world) && super.equals(other);
     }
 }

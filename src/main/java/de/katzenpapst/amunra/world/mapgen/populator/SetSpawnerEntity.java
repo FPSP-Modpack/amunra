@@ -15,12 +15,11 @@ public class SetSpawnerEntity extends AbstractPopulator {
 
     @Override
     public boolean populate(World world) {
-        if (world.getBlock(x, y, z) == Blocks.mob_spawner)
-        {
+        if (world.getBlock(x, y, z) == Blocks.mob_spawner) {
             final TileEntityMobSpawner spawner = (TileEntityMobSpawner) world.getTileEntity(x, y, z);
-            if (spawner != null)
-            {
-                spawner.func_145881_a().setEntityName(entityName);
+            if (spawner != null) {
+                spawner.func_145881_a()
+                    .setEntityName(entityName);
                 return true;
             }
         }

@@ -1,22 +1,21 @@
 package de.katzenpapst.amunra.block;
 
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
 import micdoodle8.mods.galacticraft.api.world.IAtmosphericGas;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 
 public class MethaneGrass extends SubBlockGrass {
 
-    //blockIcon = 0 = top
+    // blockIcon = 0 = top
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconSide;
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconBottom;
-
-
 
     public MethaneGrass(String name) {
         super(name, "amunra:methanegrass", "amunra:methanegrassside", "amunra:methanedirt");
@@ -24,6 +23,7 @@ public class MethaneGrass extends SubBlockGrass {
 
     /**
      * Return the block what this should revert to if the conditions are bad
+     * 
      * @return
      */
     @Override
@@ -45,11 +45,9 @@ public class MethaneGrass extends SubBlockGrass {
     @Override
     public boolean canLiveHere(World world, int x, int y, int z) {
         // now this grass can only live in a methane atmosphere
-        return
-                (world.provider instanceof WorldProviderSpace) &&
-                super.canLiveHere(world, x, y, z) &&
-                ((WorldProviderSpace)world.provider).isGasPresent(IAtmosphericGas.METHANE);
-        //!OxygenUtil.testContactWithBreathableAir(world, world.getBlock(x, y+1, z), x, y, z, 0);
+        return (world.provider instanceof WorldProviderSpace) && super.canLiveHere(world, x, y, z)
+            && ((WorldProviderSpace) world.provider).isGasPresent(IAtmosphericGas.METHANE);
+        // !OxygenUtil.testContactWithBreathableAir(world, world.getBlock(x, y+1, z), x, y, z, 0);
     }
 
     /**

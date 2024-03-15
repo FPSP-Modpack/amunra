@@ -1,11 +1,12 @@
 package de.katzenpapst.amunra.world.mehen;
 
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.world.asteroidWorld.AmunRaAsteroidWorldProvider;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.planets.asteroids.world.gen.WorldChunkManagerAsteroids;
-import net.minecraft.world.biome.WorldChunkManager;
-import net.minecraft.world.chunk.IChunkProvider;
 
 public class MehenWorldProvider extends AmunRaAsteroidWorldProvider {
 
@@ -28,10 +29,10 @@ public class MehenWorldProvider extends AmunRaAsteroidWorldProvider {
     public String getSaveDataID() {
         return "AsteroidDataMehen";
     }
-    
+
     @Override
     public boolean canSpaceshipTierPass(int tier) {
-    	return tier >= AmunRa.instance.asteroidBeltMehen.getTierRequirement();
+        return tier >= AmunRa.instance.asteroidBeltMehen.getTierRequirement();
     }
-    
+
 }

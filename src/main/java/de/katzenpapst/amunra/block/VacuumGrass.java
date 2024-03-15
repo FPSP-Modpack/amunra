@@ -1,15 +1,16 @@
 package de.katzenpapst.amunra.block;
 
+import net.minecraft.util.IIcon;
+import net.minecraft.world.World;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import micdoodle8.mods.galacticraft.api.prefab.core.BlockMetaPair;
 import micdoodle8.mods.galacticraft.api.prefab.world.gen.WorldProviderSpace;
-import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 
 public class VacuumGrass extends SubBlockGrass {
 
-    //blockIcon = 0 = top
+    // blockIcon = 0 = top
     @SideOnly(Side.CLIENT)
     protected IIcon blockIconSide;
     @SideOnly(Side.CLIENT)
@@ -21,6 +22,7 @@ public class VacuumGrass extends SubBlockGrass {
 
     /**
      * Return the block what this should revert to if the conditions are bad
+     * 
      * @return
      */
     @Override
@@ -42,15 +44,10 @@ public class VacuumGrass extends SubBlockGrass {
     @Override
     public boolean canLiveHere(World world, int x, int y, int z) {
 
-        return (
-                (world.provider instanceof WorldProviderSpace)
-                &&
-                (((WorldProviderSpace)world.provider).getCelestialBody() != null)
-                &&
-                (((WorldProviderSpace)world.provider).getCelestialBody().atmosphere.isEmpty())
-                &&
-                super.canLiveHere(world, x, y, z)
-                );
+        return ((world.provider instanceof WorldProviderSpace)
+            && (((WorldProviderSpace) world.provider).getCelestialBody() != null)
+            && (((WorldProviderSpace) world.provider).getCelestialBody().atmosphere.isEmpty())
+            && super.canLiveHere(world, x, y, z));
 
     }
 }

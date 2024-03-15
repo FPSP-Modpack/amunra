@@ -1,14 +1,15 @@
 package de.katzenpapst.amunra.world.neper;
 
+import net.minecraft.world.biome.WorldChunkManager;
+import net.minecraft.world.chunk.IChunkProvider;
+
 import de.katzenpapst.amunra.AmunRa;
 import de.katzenpapst.amunra.world.AmunraWorldChunkManager;
 import de.katzenpapst.amunra.world.AmunraWorldProvider;
-import net.minecraft.world.biome.WorldChunkManager;
-import net.minecraft.world.chunk.IChunkProvider;
 import micdoodle8.mods.galacticraft.api.galaxies.CelestialBody;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 
-public class NeperWorldProvider extends AmunraWorldProvider  {
+public class NeperWorldProvider extends AmunraWorldProvider {
 
     /**
      * Determines the rate to spawn meteors in this planet. Lower means MORE
@@ -53,18 +54,18 @@ public class NeperWorldProvider extends AmunraWorldProvider  {
         float f3 = 0.7529412F;
         float f4 = 0.84705883F;
         float f5 = 1.0F;
-        /*f3 *= f2 * 0.94F + 0.06F;
-        f4 *= f2 * 0.94F + 0.06F;
-        f5 *= f2 * 0.91F + 0.09F;*/
-        //return Vec3.createVectorHelper((double)f3, (double)f4, (double)f5);
+        /*
+         * f3 *= f2 * 0.94F + 0.06F;
+         * f4 *= f2 * 0.94F + 0.06F;
+         * f5 *= f2 * 0.91F + 0.09F;
+         */
+        // return Vec3.createVectorHelper((double)f3, (double)f4, (double)f5);
         return new Vector3(f3, f4, f5);
     }
 
-
-
     @Override
     public Vector3 getSkyColor() {
-        return new Vector3(0.5,0.75,1);
+        return new Vector3(0.5, 0.75, 1);
     }
 
     @Override
@@ -97,9 +98,9 @@ public class NeperWorldProvider extends AmunraWorldProvider  {
         return 1F;
     }
 
-	@Override
-	public boolean canSpaceshipTierPass(int tier) {
-    	return tier >= AmunRa.instance.moonNeper.getTierRequirement();
-	}
+    @Override
+    public boolean canSpaceshipTierPass(int tier) {
+        return tier >= AmunRa.instance.moonNeper.getTierRequirement();
+    }
 
 }
