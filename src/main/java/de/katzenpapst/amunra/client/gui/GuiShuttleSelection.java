@@ -250,6 +250,7 @@ public class GuiShuttleSelection extends GuiARCelestialSelection {
                 } // if itemstack
                 else if (next instanceof ArrayList)
                 {
+                    @SuppressWarnings("unchecked")
                     ArrayList<ItemStack> items = (ArrayList<ItemStack>) next;
 
                     int amount = 0;

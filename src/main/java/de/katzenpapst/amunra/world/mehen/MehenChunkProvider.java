@@ -17,11 +17,11 @@ public class MehenChunkProvider extends AmunRaAsteroidsChunkProvider {
     }
 
     @Override
-    public List getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k)
+    public List<SpawnListEntry> getPossibleCreatures(EnumCreatureType par1EnumCreatureType, int i, int j, int k)
     {
         if (par1EnumCreatureType == EnumCreatureType.monster)
         {
-            final List monsters = new ArrayList();
+            final List<SpawnListEntry> monsters = new ArrayList<>();
 
             monsters.add(new SpawnListEntry(EntitySentry.class, 3000, 1, 3));
             return monsters;

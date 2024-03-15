@@ -247,7 +247,6 @@ abstract public class EntityBaseLaserArrow extends Entity implements IProjectile
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public void onUpdate()
     {
         super.onUpdate();

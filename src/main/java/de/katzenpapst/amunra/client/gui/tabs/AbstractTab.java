@@ -21,11 +21,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 abstract public class AbstractTab {
 
-    protected List<GuiButton> buttonList = new ArrayList();
+    protected List<GuiButton> buttonList = new ArrayList<>();
 
-    protected List<GuiLabel> labelList = new ArrayList();
+    protected List<GuiLabel> labelList = new ArrayList<>();
 
-    protected List<GuiElementTextBox> textBoxList = new ArrayList();
+    protected List<GuiElementTextBox> textBoxList = new ArrayList<>();
 
 
     /** Reference to the Minecraft object. */

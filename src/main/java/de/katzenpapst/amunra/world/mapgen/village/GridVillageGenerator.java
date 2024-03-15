@@ -78,7 +78,8 @@ public class GridVillageGenerator extends StructureGenerator {
 		Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
 		GridVillageStart start = new GridVillageStart(this.worldObj, xChunkCoord, zChunkCoord, rand4structure);
-		ArrayList compList = generateSubComponents(components, rand4structure, 0);
+		@SuppressWarnings("unchecked")
+        ArrayList<Object> compList = generateSubComponents(components, rand4structure, 0);
 		/*
 		ArrayList compList = new ArrayList();
 			// now prepare the actual component list

@@ -24,11 +24,9 @@ public class BlockGravitation extends SubBlockMachine {
 
     private String backTexture;
     private String sideTexture;
-    private String activeTexture;
 
     private IIcon backIcon = null;
     private IIcon sideIcon = null;
-    private IIcon activeIcon = null;
 
 
     public BlockGravitation(String name, String frontInactiveTexture, String activeTexture, String sideTexture, String backTexture) {
@@ -36,7 +34,6 @@ public class BlockGravitation extends SubBlockMachine {
 
         this.backTexture = backTexture;
         this.sideTexture = sideTexture;
-        this.activeTexture = activeTexture;
     }
 
     @Override
@@ -45,7 +42,6 @@ public class BlockGravitation extends SubBlockMachine {
         super.registerBlockIcons(par1IconRegister);
         backIcon = par1IconRegister.registerIcon(backTexture);
         sideIcon = par1IconRegister.registerIcon(sideTexture);
-        activeIcon = par1IconRegister.registerIcon(activeTexture);
     }
 
     @Override

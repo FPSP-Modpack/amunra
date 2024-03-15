@@ -158,11 +158,12 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
                 {
                     if (this.buyingList.size() > 1)
                     {
-                        Iterator iterator = this.buyingList.iterator();
+                        @SuppressWarnings("unchecked")
+                        Iterator<MerchantRecipe> iterator = this.buyingList.iterator();
 
                         while (iterator.hasNext())
                         {
-                            MerchantRecipe merchantrecipe = (MerchantRecipe)iterator.next();
+                            MerchantRecipe merchantrecipe = iterator.next();
 
                             if (merchantrecipe.isRecipeDisabled())
                             {
@@ -193,6 +194,7 @@ public class EntityRobotVillager extends EntityAgeable implements IEntityBreatha
      * based on the villagers profession add items, equipment, and recipies adds par1 random items to the list of things
      * that the villager wants to buy. (at most 1 of each wanted type is added)
      */
+    @SuppressWarnings("unchecked")
     private void addDefaultEquipmentAndRecipies(int p_70950_1_)
     {
         // now do the recipes

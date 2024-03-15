@@ -409,7 +409,6 @@ public class EntityShuttle extends EntityTieredRocket {
         } // otherwise wait
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void onUpdate()
     {

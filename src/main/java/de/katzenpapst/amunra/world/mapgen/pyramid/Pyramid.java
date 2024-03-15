@@ -34,7 +34,6 @@ public class Pyramid extends BaseStructureStart
 
     private int mainRoomOffset = 3;
 
-    private int sideRoomWidth = 13;
     private int innerRoomOffset = 13;
 
     private int smallRoomWidth = 17;
@@ -98,18 +97,18 @@ public class Pyramid extends BaseStructureStart
         basicLoot.setMin(5);
         basicLoot.setMax(8);
 
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, alienBook);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, ironIngot);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, goldIngot);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, diamond);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, nanites);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, pearl);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, alienBook);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, ironIngot);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, goldIngot);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, diamond);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, nanites);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, pearl);
 
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, lithium);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, coldcrystal);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, ruby);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, deshPick);
-        basicLoot.addItem(LOOT_CATEGORY_BASIC, desh);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, lithium);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, coldcrystal);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, ruby);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, deshPick);
+        ChestGenHooks.addItem(LOOT_CATEGORY_BASIC, desh);
 
     }
 

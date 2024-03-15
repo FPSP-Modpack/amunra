@@ -50,7 +50,6 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         return list;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void updateEntity()
     {
@@ -68,10 +67,10 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
                 this.spawned = false;
             }
 
-            List<Entity> entitiesInRoom = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
+            List<EntityLivingBase> entitiesInRoom = this.worldObj.getEntitiesWithinAABB(EntityLivingBase.class, this.roomArea);
             int numPlayers = 0;
             boolean isBossInRoom = false;
-            for(Entity ent : entitiesInRoom) {
+            for(EntityLivingBase ent : entitiesInRoom) {
                 if(ent instanceof EntityPlayer) {
                     numPlayers++;
                 } else if(bossClass.isInstance(ent)) {
@@ -136,7 +135,6 @@ public class TileEntityBossDungeonSpawner extends TileEntityAdvanced implements 
         this.worldObj.playSoundAtEntity(entity, GalacticraftCore.TEXTURE_PREFIX + "ambience.scaryscape", 9.0F, 1.4F);
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void readFromNBT(NBTTagCompound nbt)
     {

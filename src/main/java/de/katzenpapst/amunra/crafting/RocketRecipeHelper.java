@@ -1,12 +1,14 @@
 package de.katzenpapst.amunra.crafting;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
 public class RocketRecipeHelper {
 
-    ArrayList<ItemStack>[] stacks = new ArrayList[3];
+    @SuppressWarnings("unchecked")
+    List<ItemStack>[] stacks = new ArrayList[3];
     /*ArrayList<ItemStack> stack2 = new ArrayList<ItemStack>();
     ArrayList<ItemStack> stack3 = new ArrayList<ItemStack>();*/
 
@@ -37,7 +39,7 @@ public class RocketRecipeHelper {
         return result;
     }
 
-    public ArrayList<ItemStack> getStacks(int i) {
+    public List<ItemStack> getStacks(int i) {
         return stacks[i];
     }
 

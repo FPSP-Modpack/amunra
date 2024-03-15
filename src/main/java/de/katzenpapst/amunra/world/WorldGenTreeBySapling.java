@@ -10,8 +10,6 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 
 public class WorldGenTreeBySapling extends WorldGenAbstractTree
 {
-    /** The minimum height of a generated tree. */
-    private final int minTreeHeight;
     /** True if this tree should grow Vines. */
     //private final boolean vinesGrow;
     /** The metadata value of the wood to use in tree generation. */
@@ -29,7 +27,6 @@ public class WorldGenTreeBySapling extends WorldGenAbstractTree
     public WorldGenTreeBySapling(boolean doBlockNotify, int minTreeHeight, BlockMetaPair sapling)
     {
         super(doBlockNotify);
-        this.minTreeHeight = minTreeHeight;
         this.sapling = (AbstractSapling) ((BlockBasicMeta)sapling.getBlock()).getSubBlock(sapling.getMetadata());
         //this.wood = wood;
         //this.leaves = leaves;
@@ -41,7 +38,6 @@ public class WorldGenTreeBySapling extends WorldGenAbstractTree
     public WorldGenTreeBySapling(boolean doBlockNotify, int minTreeHeight, AbstractSapling sapling)
     {
         super(doBlockNotify);
-        this.minTreeHeight = minTreeHeight;
         this.sapling = sapling;
         //this.wood = wood;
         //this.leaves = leaves;

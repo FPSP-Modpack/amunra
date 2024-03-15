@@ -89,7 +89,7 @@ public class ItemBasicMulti extends Item implements ItemBlockDesc.IBlockShiftDes
     @Override
     public CreativeTabs getCreativeTab()
     {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     @Override

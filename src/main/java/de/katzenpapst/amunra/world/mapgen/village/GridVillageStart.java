@@ -84,7 +84,7 @@ public class GridVillageStart extends BaseStructureStart {
 
 
 
-    public void setComponents(ArrayList components) {
+    public void setComponents(ArrayList<Object> components) {
 
         // byte should be enough for gridsize
 

@@ -163,6 +163,7 @@ public class BlockMachineMeta extends BlockTileGC implements ItemBlockDesc.IBloc
         return this.getSubBlock(meta).getUnlocalizedName();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {

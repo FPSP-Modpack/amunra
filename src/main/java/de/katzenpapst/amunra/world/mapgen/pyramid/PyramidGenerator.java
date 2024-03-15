@@ -66,7 +66,8 @@ public class PyramidGenerator extends StructureGenerator {
         Random rand4structure = new Random(this.worldObj.getSeed() ^ this.getSalt() ^ xChunkCoord ^ zChunkCoord);
 
 
-        ArrayList compList = generateSubComponents(components, rand4structure, 12);
+        @SuppressWarnings("unchecked")
+        ArrayList<PyramidRoom> compList = generateSubComponents(components, rand4structure, 12);
 
         p.setSmallRooms(compList);
 

@@ -239,6 +239,7 @@ public class BlockBasicMeta extends Block implements IMetaBlock, IDetectableReso
         return sb.createTileEntity(world, meta);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {

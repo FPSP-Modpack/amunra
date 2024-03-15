@@ -17,9 +17,11 @@ import net.minecraft.world.World;
 abstract public class BaseStructureStart extends BaseStructureComponent {
 
 	protected PopulatorByChunkMap populatorsByChunk;
-	public class PopulatorMap extends HashMap<BlockVec3, AbstractPopulator> {}
+	public class PopulatorMap extends HashMap<BlockVec3, AbstractPopulator> {
+        private static final long serialVersionUID = -1581029941656595874L;}
 
-	public class PopulatorByChunkMap extends HashMap<Long, PopulatorMap> {}
+	public class PopulatorByChunkMap extends HashMap<Long, PopulatorMap> {
+        private static final long serialVersionUID = 2084699646332356938L;}
 
 	protected int chunkX;
 	protected int chunkZ;

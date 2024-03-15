@@ -48,7 +48,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 	 * @param subCompData
 	 * @return
 	 */
-	private ArrayList cloneSubComponentList(ArrayList<SubComponentData> subCompData) {
+	private ArrayList<SubComponentData> cloneSubComponentList(ArrayList<SubComponentData> subCompData) {
 		ArrayList<SubComponentData> result = new ArrayList<SubComponentData>();
 
 		for(SubComponentData entry: subCompData) {
@@ -133,7 +133,7 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 	 * @return
 	 */
 	protected ArrayList generateSubComponents(ArrayList<SubComponentData> subCompData, Random rand, int limit) {
-		ArrayList compList = new ArrayList();
+		ArrayList<BaseStructureComponent> compList = new ArrayList<>();
 		HashMap<String, Integer> typeAmountMapping = new HashMap<String, Integer>();
 
 		if(limit <= 0) {
@@ -237,7 +237,8 @@ abstract public class StructureGenerator extends MapGenBaseMeta {
 
 	protected IChunkProvider chunkProvider = null;
 
-	public class BaseStructureMap extends HashMap<Long, BaseStructureStart> {};
+	public class BaseStructureMap extends HashMap<Long, BaseStructureStart> {
+        private static final long serialVersionUID = -4123587272811107730L;};
 
 	protected BaseStructureMap structureMap = new BaseStructureMap();
 

@@ -34,7 +34,7 @@ public class GuiArtificialGravity extends GuiContainerGC implements ITextBoxCall
 
     private static final ResourceLocation guiTexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/gravity.png");
 
-    protected List<GuiElementTextBox> inputFieldList = new ArrayList();
+    protected List<GuiElementTextBox> inputFieldList = new ArrayList<>();
 
     private GuiElementTextBox leftValueField;
     private GuiElementTextBox rightValueField;

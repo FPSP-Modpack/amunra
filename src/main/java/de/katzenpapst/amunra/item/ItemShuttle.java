@@ -40,7 +40,7 @@ public class ItemShuttle extends Item implements IHoldableItem {
     @Override
     public CreativeTabs getCreativeTab()
     {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
     public EntityShuttle spawnRocketEntity(ItemStack stack, World world, double centerX, double centerY, double centerZ)
@@ -51,7 +51,7 @@ public class ItemShuttle extends Item implements IHoldableItem {
         world.spawnEntityInWorld(spaceship);
 
 
-        if (spaceship.isPreFueled(stack.getItemDamage()))
+        if (EntityShuttle.isPreFueled(stack.getItemDamage()))
         {
             spaceship.fuelTank.fill(new FluidStack(GalacticraftCore.fluidFuel, spaceship.fuelTank.getCapacity()), true);
         }

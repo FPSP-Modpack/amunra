@@ -33,7 +33,7 @@ public abstract class ItemAbstractRaygun extends ItemAbstractBatteryUser {
     @Override
     public CreativeTabs getCreativeTab()
     {
-        return AmunRa.instance.arTab;
+        return AmunRa.arTab;
     }
 
 

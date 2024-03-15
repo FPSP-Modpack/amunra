@@ -316,7 +316,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
         if (!preEvent.isCanceled())
         {
-            int size = this.getWidthForCelestialBodyStatic(moon);
+            int size = getWidthForCelestialBodyStatic(moon);
             this.drawTexturedModalRect(-size / 2, -size / 2, size, size, 0, 0, preEvent.textureSize, preEvent.textureSize, false, false, preEvent.textureSize, preEvent.textureSize);
             matrixMap.put(moon, worldMatrix1);
         }
@@ -521,7 +521,7 @@ public class GuiARCelestialSelection extends GuiCelestialSelection {
 
                     if (!preEvent.isCanceled())
                     {
-                        int size = this.getWidthForMothershipStatic(ms);
+                        int size = getWidthForMothershipStatic(ms);
                         this.drawTexturedModalRect(-size / 2, -size / 2, size, size, 0, 0, preEvent.textureSize, preEvent.textureSize, false, false, preEvent.textureSize, preEvent.textureSize);
                         result.put(ms, worldMatrix1);
                     }

@@ -19,7 +19,6 @@ import micdoodle8.mods.galacticraft.api.galaxies.SolarSystem;
 import micdoodle8.mods.galacticraft.api.galaxies.Star;
 import micdoodle8.mods.galacticraft.api.vector.Vector3;
 import micdoodle8.mods.galacticraft.api.world.IGalacticraftWorldProvider;
-import micdoodle8.mods.galacticraft.core.GalacticraftCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.GLAllocation;
@@ -101,9 +100,6 @@ public class SkyProviderDynamic extends IRenderHandler {
 
     protected ArrayList<BodyRenderTask> farBodiesToRender = new ArrayList<BodyRenderTask>();
     protected ArrayList<BodyRenderTask> nearBodiesToRender = new ArrayList<BodyRenderTask>();
-
-    private static final ResourceLocation overworldTexture = new ResourceLocation(GalacticraftCore.ASSET_PREFIX, "textures/gui/celestialbodies/earth.png");
-    private static final ResourceLocation sunTexture = new ResourceLocation("textures/environment/sun.png");
 
     // angle of the system in the sky
     private static float planetAxisAngle = -19.0F;
@@ -239,7 +235,7 @@ public class SkyProviderDynamic extends IRenderHandler {
             initAsteroidRenderList(seed);
             this.isAsteroidBelt = true;
             this.hasHorizon = false;
-            this.planetAxisAngle = PLANET_AXIS_ANGLE_ASTEROID;
+            planetAxisAngle = PLANET_AXIS_ANGLE_ASTEROID;
             this.isAsteroidBeltMoon = (body instanceof Moon);
             if(this.isAsteroidBeltMoon) {
                 this.rType = RenderType.RINGS;
@@ -247,7 +243,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         } else {
             this.isAsteroidBelt = false;
             clearAsteroidRenderList();
-            this.planetAxisAngle = PLANET_AXIS_ANGLE_DEFAULT;
+            planetAxisAngle = PLANET_AXIS_ANGLE_DEFAULT;
         }
     }
 
@@ -449,7 +445,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         }
         GL11.glRotatef(currentCelestialAngle  * 360.0F, 1.0F, 0.0F, 0.0F);
         //this.planetAxisAngle = 180.0F;
-        GL11.glRotatef(this.planetAxisAngle, 0, 1.0F, 0);
+        GL11.glRotatef(planetAxisAngle, 0, 1.0F, 0);
 
         renderStars(curBrightness);
 
@@ -949,7 +945,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         // try to rotate it
         // planetAxisAngle = -90.0F;
         if(!this.isAsteroidBelt) {
-            GL11.glRotatef(this.planetAxisAngle, 0, 1.0F, 0);
+            GL11.glRotatef(planetAxisAngle, 0, 1.0F, 0);
         }
 
         GL11.glEnable(GL11.GL_BLEND);
@@ -965,7 +961,7 @@ public class SkyProviderDynamic extends IRenderHandler {
         GL11.glPushMatrix();
 
         if(!this.isAsteroidBelt) {
-            GL11.glRotatef(this.moonAxisAngle, 0, 1.0F, 0);
+            GL11.glRotatef(moonAxisAngle, 0, 1.0F, 0);
         } else {
             //GL11.glRotatef(90.0F, 0.0F, 0.0F, 1.0F);
         }

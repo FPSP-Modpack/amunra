@@ -17,7 +17,7 @@ import de.katzenpapst.amunra.mob.entity.EntityRobotVillager;
 import de.katzenpapst.amunra.mob.model.ModelRobotVillager;
 
 public class RenderRobotVillager extends RenderLiving {
-    private static final ResourceLocation villagerTexture = new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/entity/robotvillager.png");
+    private static final ResourceLocation villagerTexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/entity/robotvillager.png");
 
     protected ModelRobotVillager villagerModel;
 

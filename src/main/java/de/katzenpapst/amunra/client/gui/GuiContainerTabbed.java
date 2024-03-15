@@ -27,7 +27,6 @@ abstract public class GuiContainerTabbed extends GuiContainerGC {
         tabButtons= new ArrayList<TabButton>();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui()
     {

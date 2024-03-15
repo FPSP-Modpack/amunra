@@ -116,6 +116,7 @@ public class FakeBlock extends SubBlock implements IPartialSealableBlock, IMassi
         return new TileEntityShuttleDockFake();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z)
     {

@@ -21,7 +21,6 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     private final ResourceLocation icontexture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/gui/mothership_icons/0.png");
 
-    private final TileEntityMothershipSettings tile;
     private Mothership ship;
 
 /*    private GuiButton applyButton;
@@ -43,7 +42,6 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
 
     public TabMothershipCustom(TileEntityMothershipSettings tile, GuiMothershipSettings parent, Minecraft mc, int width, int height, int xSize, int ySize) {
         super(parent, mc, width, height, xSize, ySize);
-        this.tile = tile;
         this.ship = tile.getMothership();
         mothershipTextures = AmunRa.instance.getPossibleMothershipTextures();
 
@@ -164,9 +162,7 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     }
 
     @Override
-    public void onIntruderInteraction(GuiElementTextBox textBox) {
-        // TODO Auto-generated method stub
-    }
+    public void onIntruderInteraction(GuiElementTextBox textBox) {}
 
     public void setGuiEnabled(boolean set) {
         //applyButton.enabled = set;
@@ -257,8 +253,5 @@ public class TabMothershipCustom extends AbstractTab implements ITextBoxCallback
     }
 
     @Override
-    public void mothershipOperationFailed(String message) {
-        // TODO Auto-generated method stub
-
-    }
+    public void mothershipOperationFailed(String message) {}
 }

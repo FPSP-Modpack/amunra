@@ -159,8 +159,8 @@ public class ClientProxy extends ARSidedProxy {
         MinecraftForgeClient.registerItemRenderer(Item.getItemFromBlock(ARBlocks.metaBlockMothershipEngineJet), new ItemRendererJet(
                 new IModelCustom[]{engineModel, engineModelIon},
                 new ResourceLocation[] {
-                        new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/jet.png"),
-                        new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/model/jet-ion.png")
+                        new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet.png"),
+                        new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet-ion.png")
                         }
                 ));
 
@@ -188,10 +188,10 @@ public class ClientProxy extends ARSidedProxy {
 
         //RenderingRegistry.registerEntityRenderingHandler(TileEntityMothershipEngine.class, new RenderMothershipEngine(engineModel));
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineJet.class, new RenderMothershipJet(engineModel, new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet.png")));
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineBooster.class, new RenderMothershipBooster(new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/blocks/jet-base.png")));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineBooster.class, new RenderMothershipBooster(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base.png")));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineIon.class, new RenderMothershipJet(engineModelIon, new ResourceLocation(AmunRa.ASSETPREFIX, "textures/model/jet-ion.png"))); // for now
-        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineBoosterIon.class, new RenderMothershipBooster(new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/blocks/jet-base-ion.png")));
+        ClientRegistry.bindTileEntitySpecialRenderer(TileEntityMothershipEngineBoosterIon.class, new RenderMothershipBooster(new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/jet-base-ion.png")));
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityBlockScale.class, new RenderBlockScale());
 

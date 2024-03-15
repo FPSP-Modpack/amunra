@@ -118,7 +118,7 @@ public class Volcano extends BaseStructureStart {
                     continue;
                 }
 
-                int lowestBlock = this.getHighestSpecificBlock(
+                int lowestBlock = getHighestSpecificBlock(
                         blocks,
                         metas,
                         CoordHelper.abs2rel(x, chunkX),
@@ -189,12 +189,12 @@ public class Volcano extends BaseStructureStart {
                         for(int y = maxDepth+1; y < height; y++) {
 
                             if(distance <= this.shaftRadius) {
-                                this.placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, fluid);
+                                placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, fluid);
                             } else {
                                 //if(y == groundLevel+height-1) {
                                 //	this.placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, fluid);
                                 //} else {
-                                this.placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, this.shaftMaterial);
+                                placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, this.shaftMaterial);
                                 //}
                             }
                         }
@@ -202,7 +202,7 @@ public class Volcano extends BaseStructureStart {
                     } else {
                         for(int y = lowestBlock; y < height; y++) {
 
-                            this.placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, mountainMaterial);
+                            placeBlockAbs(blocks, metas, x, y, z, chunkX, chunkZ, mountainMaterial);
 
                         }
                     }
@@ -218,7 +218,7 @@ public class Volcano extends BaseStructureStart {
                                         zRel*zRel/magmaChamberWidth*magmaChamberWidth) <= 1
 
                                 ) {
-                            this.placeBlockAbs(blocks, metas, x, y+maxDepth, z, chunkX, chunkZ, fluid);
+                            placeBlockAbs(blocks, metas, x, y+maxDepth, z, chunkX, chunkZ, fluid);
                         }
                     }
 

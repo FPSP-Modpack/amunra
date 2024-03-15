@@ -1,7 +1,6 @@
 package de.katzenpapst.amunra;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -96,7 +95,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 
-@Mod(modid = AmunRa.MODID, version = AmunRa.VERSION, dependencies = "required-after:GalacticraftCore; required-after:GalacticraftMars",
+@Mod(modid = AmunRa.MODID, version = AmunRa.VERSION, dependencies = "required-after:GalacticraftCore;required-after:GalacticraftMars",
 name = AmunRa.MODNAME)
 public class AmunRa
 {
@@ -200,25 +199,18 @@ public class AmunRa
         proxy.preInit(event);
     }
 
+    @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleMothershipTextures() {
         return (List<ResourceLocation>) possibleMothershipTextures.clone();
     }
 
+    @SuppressWarnings("unchecked")
     public List<ResourceLocation> getPossibleAsteroidTextures() {
         return (List<ResourceLocation>) possibleAsteroidTextures.clone();
     }
 
     public void addPossibleMothershipTexture(ResourceLocation loc) {
         possibleMothershipTextures.add(loc);
-    }
-
-    private HashSet<String> configGetStringHashSet(Configuration config, String name, String category, String[] defaultValues, String comment) {
-        String[] data = config.getStringList(name, category, defaultValues, comment);
-        HashSet<String> result = new HashSet<String>();
-        for(String str: data) {
-            result.add(str);
-        }
-        return result;
     }
 
     @EventHandler
@@ -288,7 +280,7 @@ public class AmunRa
     }
 
     public void registerCreature(Class<? extends Entity> entityClass, String entityName, int eggBgColor, int eggFgColor) {
-        int newID = EntityRegistry.instance().findGlobalUniqueEntityId();
+        int newID = EntityRegistry.findGlobalUniqueEntityId();
         EntityRegistry.registerGlobalEntityID(entityClass, entityName, newID, eggBgColor, eggFgColor);
         EntityRegistry.registerModEntity(entityClass, entityName, nextInternalID(), AmunRa.instance, 80, 3, true);
     }
@@ -438,7 +430,7 @@ public class AmunRa
         systemAmunRa.setMainStar(starRa).setMapPosition(new Vector3(1.5F, -1.15F, 0.0F));
         GalaxyRegistry.registerSolarSystem(systemAmunRa);
 
-        starRa.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
+        starRa.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/sun-red2.png"));
         starRa.setParentSolarSystem(systemAmunRa);
 
 
@@ -599,7 +591,7 @@ public class AmunRa
     }
 
     protected void setCelestialBodyStuff(CelestialBody body, String texture, double phaseShift, double distance, double orbitTime) {
-        body.setBodyIcon(new ResourceLocation(this.ASSETPREFIX, "textures/gui/celestialbodies/"+texture))
+        body.setBodyIcon(new ResourceLocation(ASSETPREFIX, "textures/gui/celestialbodies/"+texture))
         .setPhaseShift((float) phaseShift)
         .setRelativeDistanceFromCenter(new ScalableDistance((float)distance, (float)distance))
         .setRelativeOrbitTime((float)orbitTime);

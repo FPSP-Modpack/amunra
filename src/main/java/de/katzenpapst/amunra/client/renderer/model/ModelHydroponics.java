@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 
 public class ModelHydroponics {
 
-    private ResourceLocation texture = new ResourceLocation(AmunRa.instance.ASSETPREFIX, "textures/blocks/hydroponics2.png");
+    private ResourceLocation texture = new ResourceLocation(AmunRa.ASSETPREFIX, "textures/blocks/hydroponics2.png");
 
     public ModelHydroponics() { }
 

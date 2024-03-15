@@ -259,7 +259,6 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
     private EnumSimplePacket type;
     private List<Object> data;
-    static private String spamCheckString;
 
     public PacketSimpleAR() {
     }
@@ -655,7 +654,7 @@ public class PacketSimpleAR extends Packet implements IPacket {
 
                 //EntityPlayer otherPlayer = world.getPlayerEntityByName(name);
                 if(playerId != null) {
-                    if(playerId.equals(player)) {
+                    if(playerId.getUUID().equals(player.getUniqueID())) {
                         AmunRa.packetPipeline.sendTo(new PacketSimpleAR(PacketSimpleAR.EnumSimplePacket.C_ADD_MOTHERSHIP_PLAYER_FAILED, "tile.mothershipSettings.permission.addUserErrorSelf", name), playerBase);
                     } else {
                         if(type == 0) {

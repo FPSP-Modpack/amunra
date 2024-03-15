@@ -76,7 +76,6 @@ public class GuiMothershipSettings extends GuiContainerTabbed {
     }
 
 
-    @SuppressWarnings("unchecked")
     @Override
     public void initGui()
     {

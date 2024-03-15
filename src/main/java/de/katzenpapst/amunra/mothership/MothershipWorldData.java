@@ -27,7 +27,6 @@ import net.minecraftforge.common.DimensionManager;
 public class MothershipWorldData extends WorldSavedData {
 
     public static final String saveDataID = "ARMothershipData";
-    private NBTTagCompound dataCompound;
 
     // orbit distances should stay the same
     private HashMap<CelestialBody, Float> orbitDistances;
@@ -48,6 +47,7 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
 
+    @SuppressWarnings("unchecked")
     public HashMap<Integer, Mothership> getMotherships() {
         return (HashMap<Integer, Mothership>) mothershipIdList.clone();
     }
@@ -207,10 +207,10 @@ public class MothershipWorldData extends WorldSavedData {
     public int getNumMothershipsForParent(CelestialBody parent) {
         int result = 0;
 
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
 
             CelestialBody curParent = curM.getParent();
             if(curParent != null && curParent.equals(parent)) {
@@ -222,10 +222,10 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public boolean hasMothershipsInOrbit(CelestialBody parent) {
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
 
             if(curM.getParent() == parent) return true;
         }
@@ -240,10 +240,10 @@ public class MothershipWorldData extends WorldSavedData {
     public List<Mothership> getMothershipsForParent(CelestialBody parent) {
         LinkedList<Mothership> result = new LinkedList<Mothership> ();
 
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
 
             CelestialBody curParent = curM.getParent();
             if(curParent != null && curParent.equals(parent)) {
@@ -262,10 +262,10 @@ public class MothershipWorldData extends WorldSavedData {
     public int getNumMothershipsForPlayer(PlayerID player) {
         int num = 0;
 
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
 
             if(curM.isPlayerOwner(player)) {
                 num++;
@@ -286,10 +286,10 @@ public class MothershipWorldData extends WorldSavedData {
     public HashMap<CelestialBody, Integer> getBodiesWithShips() {
         HashMap<CelestialBody, Integer> result = new HashMap<CelestialBody, Integer>();
 
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
             CelestialBody parent = curM.getParent();
             if(parent == null) continue;
 
@@ -313,10 +313,10 @@ public class MothershipWorldData extends WorldSavedData {
     }
 
     public Mothership getByName(String name) {
-        Iterator it = mothershipIdList.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Mothership>> it = mothershipIdList.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Mothership curM = (Mothership) pair.getValue();
+            Map.Entry<Integer, Mothership> pair = it.next();
+            Mothership curM = pair.getValue();
             if(curM.getName().equals(name)) {
                 return curM;
             }
