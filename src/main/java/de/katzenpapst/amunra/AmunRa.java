@@ -101,6 +101,7 @@ import micdoodle8.mods.galacticraft.planets.asteroids.dimension.TeleportTypeAste
 import micdoodle8.mods.galacticraft.planets.asteroids.items.AsteroidsItems;
 
 @Mod(
+    acceptableRemoteVersions = "[0.4.14-FPSP],[" + AmunRa.VERSION + "]",
     modid = AmunRa.MODID,
     version = AmunRa.VERSION,
     dependencies = "required-after:GalacticraftCore;required-after:GalacticraftMars",
@@ -158,7 +159,7 @@ public class AmunRa {
 
     @SidedProxy(
         clientSide = "de.katzenpapst.amunra.proxy.ClientProxy",
-        serverSide = "de.katzenpapst.amunra.proxy.ServerProxy")
+        serverSide = "de.katzenpapst.amunra.proxy.ARSidedProxy")
     public static ARSidedProxy proxy;
 
     public static final Logger LOGGER = LogManager.getLogger(MODNAME);

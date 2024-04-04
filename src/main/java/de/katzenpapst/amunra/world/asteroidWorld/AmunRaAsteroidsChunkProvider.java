@@ -99,14 +99,10 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
     private static final int ASTEROID_CHANCE = 800; // About 1 / n chance per XZ pair
 
-    private static final int ASTEROID_CORE_CHANCE = 2; // 1 / n chance per asteroid
     private static final int ASTEROID_SHELL_CHANCE = 2; // 1 / n chance per asteroid
 
     private static final int MIN_BLOCKS_PER_CHUNK = 50;
     private static final int MAX_BLOCKS_PER_CHUNK = 200;
-
-    private static final int RANDOM_BLOCK_FADE_SIZE = 32;
-    private static final int FADE_BLOCK_CHANCE = 5; // 1 / n chance of a block being in the fade zone
 
     private static final int NOISE_OFFSET_SIZE = 256;
 
@@ -114,18 +110,12 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
     private static final float MAX_HOLLOW_SIZE = .8F;
     private static final int HOLLOW_CHANCE = 10; // 1 / n chance per asteroid
     private static final int MIN_RADIUS_FOR_HOLLOW = 15;
-    private static final float HOLLOW_LAVA_SIZE = .12F;
 
     // Per chunk per asteroid
-    private static final int TREE_CHANCE = 2;
     private static final int TALL_GRASS_CHANCE = 2;
-    private static final int FLOWER_CHANCE = 2;
-    private static final int WATER_CHANCE = 2;
-    private static final int LAVA_CHANCE = 2;
     private static final int GLOWSTONE_CHANCE = 20;
 
     private ArrayList<AsteroidData> largeAsteroids = new ArrayList<AsteroidData>();
-    private int largeCount = 0;
     private static HashSet<BlockVec3> chunksDone = new HashSet<BlockVec3>();
     private int largeAsteroidsLastChunkX;
     private int largeAsteroidsLastChunkZ;
@@ -217,7 +207,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
 
     public void generateTerrain(int chunkX, int chunkZ, Block[] idArray, byte[] metaArray, boolean flagDataOnly) {
         this.largeAsteroids.clear();
-        this.largeCount = 0;
         final Random random = new Random();
         final int asteroidChance = ASTEROID_CHANCE;
         final int rangeY = MAX_ASTEROID_Y - MIN_ASTEROID_Y;
@@ -253,7 +242,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
                                 idArray,
                                 metaArray,
                                 flagDataOnly);
-                            this.largeCount++;
                         }
                     }
                 }
@@ -546,17 +534,6 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         // Light:"+timeString(time3, time4));
         // }
         return curChunk;
-    }
-
-    private int getIndex(int x, int y, int z) {
-        return x * CHUNK_SIZE_Y * 16 | z * CHUNK_SIZE_Y | y;
-    }
-
-    private String timeString(long time1, long time2) {
-        int ms100 = (int) ((time2 - time1) / 10000);
-        // int msdecimal = ms100 % 100;
-        String msd = ((ms100 < 10) ? "0" : "") + ms100;
-        return "" + ms100 / 100 + "." + msd + "ms";
     }
 
     private float randFromPoint(int x, int y, int z) {
@@ -1006,9 +983,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
         public int zMax;
         public int zSizeArray;
         public int asteroidSizeArray;
-        public int asteroidXArray;
         public int asteroidYArray;
-        public int asteroidZArray;
 
         public AsteroidData(boolean hollow, float[] sizeYArray2, int xMin, int zMin, int xmax, int zmax, int zSize,
             int size, int asteroidX, int asteroidY, int asteroidZ) {
@@ -1020,9 +995,7 @@ public class AmunRaAsteroidsChunkProvider extends ChunkProviderGenerate {
             this.zMax = zmax;
             this.zSizeArray = zSize;
             this.asteroidSizeArray = size;
-            this.asteroidXArray = asteroidX;
             this.asteroidYArray = asteroidY;
-            this.asteroidZArray = asteroidZ;
         }
     }
 }
